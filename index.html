@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navdeep Kumar — AI-Ops & Automation · Berlin</title>
+<meta name="description" content="Navdeep Kumar — I build tools that do my work for me. iOS apps, AI pipelines and automations. Berlin.">
+<style>
+:root{
+  --bg:#ffffff; --fg:#1a1f24; --muted:#5c6670; --line:#e6e9ec;
+  --card:#f7f8f9; --accent:#0f7a4d; --accent-fg:#ffffff;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0d1117; --fg:#e6edf3; --muted:#8b949e; --line:#21262d;
+         --card:#161b22; --accent:#2ea36f; --accent-fg:#06130c; }
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:780px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:10}
+.nav-in{display:flex;align-items:center;gap:22px;height:56px}
+.nav-in a{color:var(--muted);text-decoration:none;font-size:14.5px}
+.nav-in a:hover{color:var(--fg)}
+.brand{font-weight:650;color:var(--fg)!important}
+.spacer{flex:1}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;font-size:13px}
+.lang button{border:0;background:none;color:var(--muted);padding:5px 12px;cursor:pointer;font:inherit}
+.lang button.on{background:var(--accent);color:var(--accent-fg)}
+header{padding:72px 0 56px}
+.hero{display:flex;gap:36px;align-items:center;flex-wrap:wrap}
+.hero img{width:148px;height:148px;border-radius:50%;object-fit:cover;
+  border:3px solid var(--line)}
+h1{font-size:34px;line-height:1.2;letter-spacing:-.02em}
+.tag{color:var(--accent);font-weight:600;font-size:15px;margin-top:4px}
+.sub{color:var(--muted);margin-top:14px;max-width:56ch}
+.btns{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:9px 18px;border-radius:8px;text-decoration:none;
+  font-size:14.5px;font-weight:550;border:1px solid var(--line);color:var(--fg)}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.btn:hover{opacity:.85}
+section{padding:44px 0;border-top:1px solid var(--line)}
+h2{font-size:22px;margin-bottom:24px;letter-spacing:-.01em}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.hero{gap:24px}h1{font-size:28px}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:22px;display:flex;flex-direction:column;gap:10px}
+.card h3{font-size:17px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.badge{font-size:11.5px;font-weight:600;padding:2px 9px;border-radius:999px;
+  background:var(--accent);color:var(--accent-fg)}
+.badge.gray{background:var(--line);color:var(--muted)}
+.card p{color:var(--muted);font-size:14.5px;flex:1}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tags span{font-size:12px;color:var(--muted);border:1px solid var(--line);
+  border-radius:6px;padding:2px 8px}
+.card a.link{color:var(--accent);text-decoration:none;font-size:14px;font-weight:550}
+.card a.link:hover{text-decoration:underline}
+.about p{color:var(--muted);max-width:64ch}
+.about p+p{margin-top:14px}
+.about strong{color:var(--fg)}
+.contact-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap nav-in">
+  <a class="brand" href="#">navdeep.kumar</a>
+  <a href="#projects" data-i18n="nav_projects">Projects</a>
+  <a href="#about" data-i18n="nav_about">About</a>
+  <a href="#contact" data-i18n="nav_contact">Contact</a>
+  <div class="spacer"></div>
+  <div class="lang"><button id="btn-en" class="on">EN</button><button id="btn-de">DE</button></div>
+</div></nav>
+
+<header class="wrap"><div class="hero">
+  <img src="headshot.jpg" alt="Navdeep Kumar">
+  <div>
+    <h1>Navdeep Kumar</h1>
+    <div class="tag" data-i18n="hero_tag">AI-Ops & Automation · Berlin</div>
+    <p class="sub" data-i18n="hero_sub">I build tools that do my work for me. By day I keep Bolt's Berlin car-sharing fleet running — after hours I turn the friction I see into software: iOS apps, AI video pipelines, and automations that ship.</p>
+    <div class="btns">
+      <a class="btn primary" href="#projects" data-i18n="hero_cta1">See my work</a>
+      <a class="btn" href="https://github.com/navi3582">GitHub ↗</a>
+    </div>
+  </div>
+</div></header>
+
+<section id="projects" class="wrap">
+  <h2 data-i18n="p_title">Projects</h2>
+  <div class="grid">
+
+    <div class="card">
+      <h3>BoltInspector <span class="badge" data-i18n="b_prod">in production</span></h3>
+      <p data-i18n="p1">Fleet vehicle inspections meant manual checks and scattered records. I designed and built an iOS app with a live fleet dashboard on my own initiative — now used in day-to-day operations, with other markets asking to adopt it.</p>
+      <div class="tags"><span>SwiftUI</span><span>iOS</span><span>Google Sheets API</span><span>TestFlight</span></div>
+      <span class="tags"><span data-i18n="b_closed">closed source (company tool)</span></span>
+    </div>
+
+    <div class="card">
+      <h3>shorts-factory</h3>
+      <p data-i18n="p2">An automated pipeline that turns a topic or a business URL into a finished vertical video — AI-written script, generated clips, voiceover, karaoke captions — with a web dashboard for approving drafts before anything is published.</p>
+      <div class="tags"><span>Python</span><span>Gemini</span><span>ffmpeg</span><span>Flask</span></div>
+      <a class="link" href="https://github.com/navi3582/shorts-factory">github.com/navi3582/shorts-factory ↗</a>
+    </div>
+
+    <div class="card">
+      <h3>GermanDriveTest</h3>
+      <p data-i18n="p3">A driving-theory practice app for immigrants in Germany — practice and simulated exam modes in English, Hindi, Punjabi, Urdu and Arabic, keeping the official German terms so you learn the exam vocabulary.</p>
+      <div class="tags"><span>React Native</span><span>Expo</span><span>TypeScript</span><span>i18n</span></div>
+      <a class="link" href="https://github.com/navi3582/GermanDriveTest">github.com/navi3582/GermanDriveTest ↗</a>
+    </div>
+
+    <div class="card">
+      <h3 data-i18n="p4_t">More automations</h3>
+      <p data-i18n="p4">Scheduled LinkedIn posting through the official API, an animated GitHub profile generator (ASCII art + live contribution graph), a text-to-video CLI, and algorithmic trading experiments — small tools, built fast, running daily.</p>
+      <div class="tags"><span>Python</span><span>GitHub Actions</span><span>REST APIs</span><span>SVG</span></div>
+      <a class="link" href="https://github.com/navi3582">github.com/navi3582 ↗</a>
+    </div>
+
+  </div>
+</section>
+
+<section id="about" class="wrap about">
+  <h2 data-i18n="a_title">About</h2>
+  <p data-i18n="a1">I'm not a classically trained developer — I'm an <strong>operations person who automates</strong>. Working on the ground at Bolt, I see exactly where daily work loses time, and I've taught myself to close those gaps with software.</p>
+  <p data-i18n="a2">AI-assisted development changed what one motivated person can ship: I've taken an iOS app from idea to production use, built a full video-generation pipeline, and automated my own online presence — all outside working hours, all maintained by me.</p>
+  <p data-i18n="a3">What interests me most: <strong>AI-ops and automation</strong> — the space where knowing both sides, real operations and modern AI tooling, multiplies what a team can do.</p>
+</section>
+
+<section id="contact" class="wrap">
+  <h2 data-i18n="c_title">Contact</h2>
+  <p class="sub" data-i18n="c_sub">Based in Berlin. Happy to talk about automation, AI tooling, or interesting problems.</p>
+  <div class="contact-row btns">
+    <a class="btn primary" href="mailto:navdeep35cloud@gmail.com">Email</a>
+    <a class="btn" href="https://github.com/navi3582">GitHub ↗</a>
+  </div>
+</section>
+
+<footer class="wrap"><span data-i18n="f">Built by me, hosted free on GitHub Pages.</span></footer>
+
+<script>
+const de = {
+  nav_projects:"Projekte", nav_about:"Über mich", nav_contact:"Kontakt",
+  hero_tag:"AI-Ops & Automatisierung · Berlin",
+  hero_sub:"Ich baue Werkzeuge, die meine Arbeit für mich erledigen. Tagsüber halte ich die Berliner Carsharing-Flotte von Bolt am Laufen — nach Feierabend verwandle ich die Reibungspunkte, die ich sehe, in Software: iOS-Apps, KI-Video-Pipelines und Automatisierungen im echten Einsatz.",
+  hero_cta1:"Meine Projekte",
+  p_title:"Projekte",
+  b_prod:"im Produktiveinsatz",
+  b_closed:"Closed Source (internes Tool)",
+  p1:"Fahrzeugkontrollen in der Flotte bedeuteten manuelle Checks und verstreute Aufzeichnungen. Ich habe aus eigener Initiative eine iOS-App mit Live-Flotten-Dashboard entworfen und gebaut — heute im täglichen Einsatz, weitere Märkte wollen sie übernehmen.",
+  p2:"Eine automatisierte Pipeline, die aus einem Thema oder einer Firmen-URL ein fertiges Hochformat-Video macht — KI-Skript, generierte Clips, Voiceover, Karaoke-Untertitel — mit Web-Dashboard zur Freigabe, bevor etwas veröffentlicht wird.",
+  p3:"Eine Übungs-App für die deutsche Führerschein-Theorieprüfung, gemacht für Zugewanderte — Übungs- und Prüfungsmodus auf Englisch, Hindi, Punjabi, Urdu und Arabisch, mit den offiziellen deutschen Begriffen zum Mitlernen.",
+  p4_t:"Weitere Automatisierungen",
+  p4:"Geplante LinkedIn-Posts über die offizielle API, ein animierter GitHub-Profil-Generator (ASCII-Art + Live-Contribution-Graph), ein Text-zu-Video-CLI und algorithmische Trading-Experimente — kleine Tools, schnell gebaut, täglich im Einsatz.",
+  a_title:"Über mich",
+  a1:"Ich bin kein klassisch ausgebildeter Entwickler — ich bin ein <strong>Operations-Mensch, der automatisiert</strong>. Durch die Arbeit vor Ort bei Bolt sehe ich genau, wo im Alltag Zeit verloren geht, und habe mir beigebracht, diese Lücken mit Software zu schließen.",
+  a2:"KI-gestützte Entwicklung hat verändert, was eine motivierte Person liefern kann: Ich habe eine iOS-App von der Idee bis in den Produktiveinsatz gebracht, eine komplette Video-Pipeline gebaut und meine eigene Online-Präsenz automatisiert — alles außerhalb der Arbeitszeit, alles von mir gewartet.",
+  a3:"Was mich am meisten interessiert: <strong>AI-Ops und Automatisierung</strong> — das Feld, in dem die Kombination aus echter Operations-Erfahrung und modernem KI-Tooling ein Team vervielfacht.",
+  c_title:"Kontakt",
+  c_sub:"Wohnhaft in Berlin. Ich freue mich über Austausch zu Automatisierung, KI-Tooling oder spannenden Problemen.",
+  f:"Selbst gebaut, kostenlos gehostet auf GitHub Pages."
+};
+const en = {};
+document.querySelectorAll("[data-i18n]").forEach(el => en[el.dataset.i18n] = el.innerHTML);
+function setLang(l){
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const t = (l === "de" ? de : en)[el.dataset.i18n];
+    if (t) el.innerHTML = t;
+  });
+  document.documentElement.lang = l;
+  document.getElementById("btn-en").classList.toggle("on", l === "en");
+  document.getElementById("btn-de").classList.toggle("on", l === "de");
+  localStorage.setItem("lang", l);
+}
+document.getElementById("btn-en").onclick = () => setLang("en");
+document.getElementById("btn-de").onclick = () => setLang("de");
+const saved = localStorage.getItem("lang");
+if (saved === "de" || (!saved && navigator.language.startsWith("de"))) setLang("de");
+</script>
+</body>
+</html>
