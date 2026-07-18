@@ -174,7 +174,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
 <div class="car-col"><div class="car-sticky">
 <svg viewBox="0 0 640 430" aria-label="car inspection illustration">
   <defs>
-    <clipPath id="bodyclip"><path d="M92 336 L92 292 Q92 262 122 254 L164 244 Q210 180 276 174 L398 174 Q462 180 506 240 L550 254 Q564 258 564 282 L564 330 Q564 342 550 342 L521 342 A56 56 0 0 0 409 342 L231 342 A56 56 0 0 0 119 342 L104 342 Q92 342 92 336 Z"/></clipPath>
+    <clipPath id="bodyclip"><path d="M96 344 L88 320 Q84 306 84 292 L84 268 Q84 254 96 250 L104 248 Q110 200 146 192 Q240 176 330 180 Q346 182 362 192 L428 230 Q470 236 520 244 Q548 248 558 254 Q566 258 566 276 L566 304 Q566 318 560 330 L554 342 Q552 344 548 344 L512 344 A50 50 0 0 0 412 344 L228 344 A50 50 0 0 0 128 344 L96 344 Z"/></clipPath>
     <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
       <circle class="dotgrid" cx="1.6" cy="1.6" r="1.6"/>
     </pattern>
@@ -195,10 +195,10 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
 
   <!-- brake discs (behind wheels) -->
   <g class="part" data-dx="-16" data-dy="26" data-dr="40">
-    <circle cx="175" cy="330" r="20" fill="#9aa3a8"/><circle cx="175" cy="330" r="8" fill="#6c757b"/>
+    <circle cx="178" cy="330" r="20" fill="#9aa3a8"/><circle cx="178" cy="330" r="8" fill="#6c757b"/>
   </g>
   <g class="part" data-dx="16" data-dy="26" data-dr="-40">
-    <circle cx="465" cy="330" r="20" fill="#9aa3a8"/><circle cx="465" cy="330" r="8" fill="#6c757b"/>
+    <circle cx="462" cy="330" r="20" fill="#9aa3a8"/><circle cx="462" cy="330" r="8" fill="#6c757b"/>
   </g>
 
   <!-- battery -->
@@ -207,72 +207,74 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
     <polygon points="322,323 310,338 319,338 314,349 330,332 320,332 326,323" fill="#ffd84d"/>
   </g>
 
-  <!-- body: white Polo-style hatch with green wrap -->
+  <!-- body: Polo Mk6 silhouette -->
   <g class="part" data-dx="0" data-dy="-14" data-dr="0">
-    <path d="M92 336 L92 292 Q92 262 122 254 L164 244 Q210 180 276 174 L398 174 Q462 180 506 240 L550 254 Q564 258 564 282 L564 330 Q564 342 550 342 L521 342 A56 56 0 0 0 409 342 L231 342 A56 56 0 0 0 119 342 L104 342 Q92 342 92 336 Z"
-      fill="#eef0ee" stroke="#c9cfc9" stroke-width="2"/>
+    <path d="M96 344 L88 320 Q84 306 84 292 L84 268 Q84 254 96 250 L104 248 Q110 200 146 192 Q240 176 330 180 Q346 182 362 192 L428 230 Q470 236 520 244 Q548 248 558 254 Q566 258 566 276 L566 304 Q566 318 560 330 L554 342 Q552 344 548 344 L512 344 A50 50 0 0 0 412 344 L228 344 A50 50 0 0 0 128 344 L96 344 Z" fill="#edefed" stroke="#c6ccc6" stroke-width="2"/>
     <g clip-path="url(#bodyclip)">
-      <rect x="92" y="306" width="472" height="40" fill="#e0e4e0"/>
+      <rect x="84" y="312" width="482" height="34" fill="#dde1dd"/>
     </g>
-    <path d="M250 192 q12 -13 26 -8 l-9 11 z" fill="#23292d"/>
+    <path d="M120 272 Q330 258 542 254" stroke="#d8dcd8" stroke-width="2.5" fill="none"/>
+    <path d="M252 238 L246 342" stroke="#dde1dd" stroke-width="2" fill="none"/>
+    <path d="M104 246 L110 200 L146 192 L140 199 L110 206 Z" fill="#dde1dd"/>
+    <path d="M206 184 q10 -11 22 -7 l-7 9 z" fill="#22282c"/>
+    <rect x="398" y="248" width="26" height="7" rx="3.5" fill="#b7beb7"/>
+    <rect x="516" y="262" width="46" height="6" rx="3" fill="#1a1f22"/>
+    <path d="M540 306 Q560 306 562 310 L562 330 Q558 340 552 342 L540 342 Z" fill="#1a1f22"/>
   </g>
 
-  <!-- green wrap door (own part) -->
-  <g class="part" data-dx="52" data-dy="-40" data-dr="10">
-    <polygon points="352,178 430,178 370,340 300,340" fill="#2fbf7f"/>
-    <polygon points="317,306 352,306 340,340 304,340" fill="#27a76d"/>
-    <rect x="356" y="246" width="28" height="8" rx="4" fill="#e9efe9"/>
+  <!-- glasshouse (explodes up) -->
+  <g class="part" data-dx="0" data-dy="-95" data-dr="-4">
+    <path d="M152 232 Q166 202 192 198 Q252 188 330 191 Q344 192 356 200 L412 230 Q418 234 412 236 L160 236 Q148 236 152 232 Z" fill="#1b2126"/>
+    <path d="M292 191 L292 236" stroke="#edefed" stroke-width="7"/>
+    <path d="M366 205 L398 228" stroke="#edefed" stroke-width="4"/>
   </g>
 
-  <!-- bumpers (own parts) -->
+  <!-- green wrap front door (own part) -->
+  <g class="part" data-dx="56" data-dy="-30" data-dr="8">
+    <g clip-path="url(#bodyclip)">
+      <polygon points="306,238 402,238 380,344 284,344" fill="#2fbf7f"/>
+      <polygon points="295,312 388,312 380,344 284,344" fill="#27a76d"/>
+    </g>
+    <rect x="318" y="250" width="26" height="7" rx="3.5" fill="#e9efe9"/>
+  </g>
+
+  <!-- bumpers -->
   <g class="part" data-dx="76" data-dy="20" data-dr="8">
-    <path d="M516 300 L556 300 Q564 300 564 312 L564 330 Q564 342 550 342 L521 342 Q516 328 516 300 Z" fill="#e6e8e6" stroke="#c9cfc9" stroke-width="2"/>
+    <path d="M522 298 L560 298 Q566 302 566 310 L566 304 Q566 318 560 330 L554 342 Q552 344 548 344 L524 344 Q520 322 522 298 Z" fill="#e4e7e4" stroke="#c6ccc6" stroke-width="2"/>
   </g>
   <g class="part" data-dx="-76" data-dy="20" data-dr="-8">
-    <path d="M140 300 L92 300 L92 292 L92 336 Q92 342 104 342 L119 342 Q124 326 140 300 Z" fill="#e6e8e6" stroke="#c9cfc9" stroke-width="2"/>
+    <path d="M130 298 L84 298 L84 292 L88 320 Q92 338 100 344 L124 344 Q124 320 130 298 Z" fill="#e4e7e4" stroke="#c6ccc6" stroke-width="2"/>
   </g>
 
-  <!-- glass / roof -->
-  <g class="part" data-dx="0" data-dy="-92" data-dr="-5">
-    <path d="M186 236 Q228 186 278 180 L392 180 Q444 186 484 236 Z" fill="#1d2429"/>
-    <path d="M308 180 L308 236" stroke="#eef0ee" stroke-width="7"/>
+  <!-- mirror (green wrap) -->
+  <g class="part" data-dx="36" data-dy="-58" data-dr="22">
+    <rect x="424" y="220" width="20" height="12" rx="5" fill="#2fbf7f"/>
+    <rect x="422" y="230" width="6" height="8" rx="2" fill="#27a76d"/>
   </g>
 
-  <!-- mirror (green like the wrap) -->
-  <g class="part" data-dx="34" data-dy="-64" data-dr="24">
-    <rect x="484" y="220" width="20" height="13" rx="5" fill="#2fbf7f"/>
-    <rect x="482" y="231" width="6" height="12" rx="2" fill="#27a76d"/>
+  <!-- slim LED headlight -->
+  <g class="part" data-dx="95" data-dy="-14" data-dr="12">
+    <polygon points="520,247 558,254 560,266 522,260" fill="#e8edf2"/>
+    <polygon points="524,251 554,257 555,262 525,257" fill="#8fd0ff"/>
+  </g>
+  <!-- wrap taillight -->
+  <g class="part" data-dx="-88" data-dy="-18" data-dr="-12">
+    <polygon points="92,252 122,249 118,270 90,268" fill="#7a1622"/>
+    <polygon points="95,256 117,254 115,264 94,262" fill="#c93332"/>
   </g>
 
-  <!-- LED headlight -->
-  <g class="part" data-dx="98" data-dy="-16" data-dr="14">
-    <rect x="534" y="258" width="28" height="13" rx="6" fill="#dfe7ef"/>
-    <rect x="538" y="262" width="20" height="4" rx="2" fill="#8fd0ff"/>
-  </g>
-  <!-- taillight -->
-  <g class="part" data-dx="-92" data-dy="-20" data-dr="-14">
-    <rect x="88" y="258" width="20" height="14" rx="6" fill="#8c1f2b"/>
-    <rect x="92" y="262" width="12" height="5" rx="2" fill="#e5533d"/>
-  </g>
-
-  <!-- wheels -->
+  <!-- wheels: twisted 10-spoke alloys -->
   <g class="part" data-dx="-74" data-dy="52" data-dr="-150">
-    <circle cx="175" cy="330" r="48" fill="#14181b"/>
-    <circle cx="175" cy="330" r="25" fill="#cfd4d8"/>
-    <g stroke="#8b949b" stroke-width="4">
-      <line x1="175" y1="309" x2="175" y2="351"/><line x1="154" y1="330" x2="196" y2="330"/>
-      <line x1="160" y1="315" x2="190" y2="345"/><line x1="190" y1="315" x2="160" y2="345"/>
-    </g>
-    <circle cx="175" cy="330" r="7" fill="#3c4348"/>
+    <circle cx="178" cy="330" r="48" fill="#14181b"/>
+    <circle cx="178" cy="330" r="26" fill="#d3d7da"/>
+    <g stroke="#9aa2a8" stroke-width="3.4" stroke-linecap="round"><line x1="178" y1="330" x2="174.8" y2="307.2"/><line x1="178" y1="330" x2="181.2" y2="307.2"/><line x1="178" y1="330" x2="198.7" y2="319.9"/><line x1="178" y1="330" x2="200.7" y2="326.0"/><line x1="178" y1="330" x2="194.0" y2="346.5"/><line x1="178" y1="330" x2="188.8" y2="350.3"/><line x1="178" y1="330" x2="167.2" y2="350.3"/><line x1="178" y1="330" x2="162.0" y2="346.5"/><line x1="178" y1="330" x2="155.3" y2="326.0"/><line x1="178" y1="330" x2="157.3" y2="319.9"/></g>
+    <circle cx="178" cy="330" r="6.5" fill="#454c52"/>
   </g>
   <g class="part" data-dx="84" data-dy="52" data-dr="150">
-    <circle cx="465" cy="330" r="48" fill="#14181b"/>
-    <circle cx="465" cy="330" r="25" fill="#cfd4d8"/>
-    <g stroke="#8b949b" stroke-width="4">
-      <line x1="465" y1="309" x2="465" y2="351"/><line x1="444" y1="330" x2="486" y2="330"/>
-      <line x1="450" y1="315" x2="480" y2="345"/><line x1="480" y1="315" x2="450" y2="345"/>
-    </g>
-    <circle cx="465" cy="330" r="7" fill="#3c4348"/>
+    <circle cx="462" cy="330" r="48" fill="#14181b"/>
+    <circle cx="462" cy="330" r="26" fill="#d3d7da"/>
+    <g stroke="#9aa2a8" stroke-width="3.4" stroke-linecap="round"><line x1="462" y1="330" x2="458.8" y2="307.2"/><line x1="462" y1="330" x2="465.2" y2="307.2"/><line x1="462" y1="330" x2="482.7" y2="319.9"/><line x1="462" y1="330" x2="484.7" y2="326.0"/><line x1="462" y1="330" x2="478.0" y2="346.5"/><line x1="462" y1="330" x2="472.8" y2="350.3"/><line x1="462" y1="330" x2="451.2" y2="350.3"/><line x1="462" y1="330" x2="446.0" y2="346.5"/><line x1="462" y1="330" x2="439.3" y2="326.0"/><line x1="462" y1="330" x2="441.3" y2="319.9"/></g>
+    <circle cx="462" cy="330" r="6.5" fill="#454c52"/>
   </g>
 
   <!-- inspection callouts -->
