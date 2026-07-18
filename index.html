@@ -7,180 +7,443 @@
 <meta name="description" content="Navdeep Kumar. I build tools that do my work for me. iOS apps, AI pipelines and automations. Berlin.">
 <style>
 :root{
-  --bg:#ffffff; --fg:#1a1f24; --muted:#5c6670; --line:#e6e9ec;
-  --card:#f7f8f9; --accent:#0f7a4d; --accent-fg:#ffffff;
+  --bg:#faf6f0; --fg:#181d1a; --muted:#5d6862; --line:#e7e0d6;
+  --card:#ffffff; --accent:#0f7a4d; --accent-soft:#e3f0e9; --accent-fg:#ffffff;
+  --glass:#22292e;
 }
-@media (prefers-color-scheme: dark){
-  :root{ --bg:#0d1117; --fg:#e6edf3; --muted:#8b949e; --line:#21262d;
-         --card:#161b22; --accent:#2ea36f; --accent-fg:#06130c; }
+[data-theme="dark"]{
+  --bg:#0d1210; --fg:#e9efeb; --muted:#93a099; --line:#232b26;
+  --card:#151c18; --accent:#31b477; --accent-soft:#152a20; --accent-fg:#06130c;
+  --glass:#0d1114;
 }
+[data-theme="dark"] .card img{opacity:.9}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--fg);
-  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  -webkit-font-smoothing:antialiased}
-.wrap{max-width:780px;margin:0 auto;padding:0 24px}
-nav{position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:10}
-.nav-in{display:flex;align-items:center;gap:22px;height:56px}
-.nav-in a{color:var(--muted);text-decoration:none;font-size:14.5px}
-.nav-in a:hover{color:var(--fg)}
-.brand{font-weight:650;color:var(--fg)!important}
-.spacer{flex:1}
-.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;font-size:13px}
-.lang button{border:0;background:none;color:var(--muted);padding:5px 12px;cursor:pointer;font:inherit}
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+.serif{font-family:Georgia,"Times New Roman",serif;font-style:italic;color:var(--accent)}
+
+/* progress bar */
+#bar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:60}
+
+/* pill nav */
+nav{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;pointer-events:none}
+.pill{pointer-events:auto;display:flex;align-items:center;gap:16px;
+  background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(12px);
+  border:1px solid var(--line);border-radius:999px;padding:8px 10px 8px 18px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.pill a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:550}
+.pill a:hover{color:var(--fg)}
+.pill .brand{color:var(--fg);font-weight:700}
+.iconbtn{border:1px solid var(--line);background:var(--card);color:var(--fg);width:34px;height:34px;
+  border-radius:50%;cursor:pointer;font-size:15px;line-height:1}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;font-size:12.5px}
+.lang button{border:0;background:none;color:var(--muted);padding:6px 11px;cursor:pointer;font:inherit}
 .lang button.on{background:var(--accent);color:var(--accent-fg)}
-header{padding:72px 0 56px}
-.hero{display:flex;gap:36px;align-items:center;flex-wrap:wrap}
-.hero img{width:148px;height:148px;border-radius:50%;object-fit:cover;
-  border:3px solid var(--line)}
-h1{font-size:34px;line-height:1.2;letter-spacing:-.02em}
-.tag{color:var(--accent);font-weight:600;font-size:15px;margin-top:4px}
-.sub{color:var(--muted);margin-top:14px;max-width:56ch}
-.btns{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-block;padding:9px 18px;border-radius:8px;text-decoration:none;
-  font-size:14.5px;font-weight:550;border:1px solid var(--line);color:var(--fg)}
-.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
-.btn:hover{opacity:.85}
-section{padding:44px 0;border-top:1px solid var(--line)}
-h2{font-size:22px;margin-bottom:24px;letter-spacing:-.01em}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media(max-width:640px){.grid{grid-template-columns:1fr}.hero{gap:24px}h1{font-size:28px}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;
-  padding:22px;display:flex;flex-direction:column;gap:10px}
-.card h3{font-size:17px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.badge{font-size:11.5px;font-weight:600;padding:2px 9px;border-radius:999px;
-  background:var(--accent);color:var(--accent-fg)}
-.badge.gray{background:var(--line);color:var(--muted)}
-.card p{color:var(--muted);font-size:14.5px;flex:1}
-.tags{display:flex;gap:6px;flex-wrap:wrap}
-.tags span{font-size:12px;color:var(--muted);border:1px solid var(--line);
-  border-radius:6px;padding:2px 8px}
-.card a.link{color:var(--accent);text-decoration:none;font-size:14px;font-weight:550}
+@media(max-width:640px){.pill{gap:10px;padding-left:14px}.pill a.navlink{display:none}}
+
+/* layout: sticky car + content */
+.stage{display:grid;grid-template-columns:44% 56%;max-width:1200px;margin:0 auto;padding:0 24px}
+.car-col,.content{min-width:0}
+.car-col{position:relative}
+.car-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center}
+.car-sticky svg{width:100%;max-width:520px;height:auto;overflow:visible}
+.content{padding-top:14vh}
+@media(max-width:840px){
+  .stage{grid-template-columns:1fr}
+  .car-col{position:sticky;top:52px;z-index:5;background:linear-gradient(var(--bg) 82%,transparent)}
+  .car-sticky{position:static;height:34vh}
+  .car-sticky svg{max-width:340px;max-height:32vh}
+  .content{padding-top:4vh}
+}
+
+section{min-height:88vh;display:flex;flex-direction:column;justify-content:center;padding:8vh 0}
+h1{font-size:clamp(40px,6vw,72px);line-height:1.04;letter-spacing:-.03em;font-weight:800}
+h1 .serif{font-weight:500}
+.tagline{color:var(--muted);margin-top:22px;max-width:52ch;font-size:17px}
+.btns{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 24px;border-radius:999px;text-decoration:none;
+  font-size:15px;font-weight:600;border:1px solid var(--line);color:var(--fg);background:var(--card)}
+.btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn:hover{transform:translateY(-2px);transition:transform .2s}
+.hint{margin-top:40px;color:var(--muted);font-size:13.5px}
+
+/* marquee */
+.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:14px 0;margin-top:52px;max-width:100%}
+.marquee-track{display:flex;gap:12px;width:max-content;animation:slide 28s linear infinite}
+@keyframes slide{to{transform:translateX(-50%)}}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;
+  padding:6px 16px;font-size:13.5px;color:var(--muted);white-space:nowrap}
+@media(prefers-reduced-motion:reduce){.marquee-track{animation:none}}
+
+h2{font-size:clamp(28px,3.6vw,44px);letter-spacing:-.02em;line-height:1.1;margin-bottom:10px}
+.kicker{color:var(--accent);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+
+/* story steps */
+.step{border-left:2px solid var(--line);padding:6px 0 6px 26px;margin:34px 0;position:relative}
+.step::before{content:"";position:absolute;left:-7px;top:14px;width:12px;height:12px;border-radius:50%;
+  background:var(--accent)}
+.step .n{font-family:ui-monospace,Menlo,monospace;color:var(--muted);font-size:13px}
+.step h3{font-size:20px;margin:4px 0 8px}
+.step p{color:var(--muted);max-width:48ch}
+
+/* tabs + cards */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 26px}
+.tabs button{border:1px solid var(--line);background:var(--card);color:var(--muted);
+  border-radius:999px;padding:8px 18px;font:inherit;font-size:14px;font-weight:550;cursor:pointer}
+.tabs button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.cards{display:grid;grid-template-columns:1fr;gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;
+  transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.08)}
+.card.hide{display:none}
+.card h3{font-size:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--accent);color:var(--accent-fg)}
+.card p{color:var(--muted);font-size:14.5px;margin:10px 0 14px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.tags span{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 8px}
+.card a.link{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600}
 .card a.link:hover{text-decoration:underline}
-.about p{color:var(--muted);max-width:64ch}
-.about p+p{margin-top:14px}
-.about strong{color:var(--fg)}
-.contact-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
-footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+/* contact */
+.contact-box{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:40px}
+.contact-box .headshot{width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid var(--line)}
+footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
+
+/* cursor dot (desktop) */
+#dot{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--accent);
+  pointer-events:none;z-index:70;opacity:0;transition:opacity .3s;transform:translate(-50%,-50%)}
+@media(hover:hover) and (pointer:fine){#dot{opacity:.8}}
+
+/* car svg part styling */
+.part{transform-box:fill-box;transform-origin:center;will-change:transform}
+.callout{opacity:0;font:600 15px ui-monospace,Menlo,monospace;fill:var(--accent)}
+.callout-line{opacity:0;stroke:var(--accent);stroke-width:1.5;stroke-dasharray:3 3;fill:none}
+#stamp{opacity:0;transform-box:fill-box;transform-origin:center}
 </style>
 </head>
 <body>
+<div id="bar"></div>
+<div id="dot"></div>
 
-<nav><div class="wrap nav-in">
-  <a class="brand" href="#">navdeep.kumar</a>
-  <a href="#projects" data-i18n="nav_projects">Projects</a>
-  <a href="#about" data-i18n="nav_about">About</a>
-  <a href="#contact" data-i18n="nav_contact">Contact</a>
-  <div class="spacer"></div>
+<nav><div class="pill">
+  <a class="brand" href="#top">navdeep.kumar</a>
+  <a class="navlink" href="#work" data-i18n="nav_projects">Work</a>
+  <a class="navlink" href="#story" data-i18n="nav_about">Story</a>
+  <a class="navlink" href="#contact" data-i18n="nav_contact">Contact</a>
   <div class="lang"><button id="btn-en" class="on">EN</button><button id="btn-de">DE</button></div>
+  <button class="iconbtn" id="theme" aria-label="theme">◐</button>
 </div></nav>
 
-<header class="wrap"><div class="hero">
-  <img src="headshot.jpg" alt="Navdeep Kumar">
-  <div>
-    <h1>Navdeep Kumar</h1>
-    <div class="tag" data-i18n="hero_tag">AI-Ops & Automation · Berlin</div>
-    <p class="sub" data-i18n="hero_sub">I build tools that do my work for me. By day I keep Bolt's Berlin car-sharing fleet running. After hours I turn the friction I see into software: iOS apps, AI video pipelines, and automations that actually ship.</p>
-    <div class="btns">
-      <a class="btn primary" href="#projects" data-i18n="hero_cta1">See my work</a>
-      <a class="btn" href="https://github.com/navi3582">GitHub ↗</a>
-    </div>
+<div class="stage" id="top">
+<div class="car-col"><div class="car-sticky">
+<svg viewBox="0 0 640 430" aria-label="car inspection illustration">
+  <ellipse cx="320" cy="378" rx="245" ry="15" fill="rgba(0,0,0,.10)"/>
+
+  <!-- brake discs (behind wheels) -->
+  <g class="part" data-dx="-16" data-dy="26" data-dr="40">
+    <circle cx="175" cy="330" r="20" fill="#9aa3a8"/><circle cx="175" cy="330" r="8" fill="#6c757b"/>
+  </g>
+  <g class="part" data-dx="16" data-dy="26" data-dr="-40">
+    <circle cx="465" cy="330" r="20" fill="#9aa3a8"/><circle cx="465" cy="330" r="8" fill="#6c757b"/>
+  </g>
+
+  <!-- battery -->
+  <g class="part" data-dx="0" data-dy="86" data-dr="0">
+    <rect x="272" y="318" width="96" height="30" rx="7" fill="#134f36"/>
+    <polygon points="322,323 310,338 319,338 314,349 330,332 320,332 326,323" fill="#ffd84d"/>
+  </g>
+
+  <!-- body -->
+  <g class="part" data-dx="0" data-dy="-14" data-dr="0">
+    <path d="M84 340 L84 282 Q84 250 116 242 L156 232 Q206 172 268 166 L392 166 Q456 172 502 232 L546 246 Q562 251 562 272 L562 336 Q562 346 550 346 L523 346 A58 58 0 0 0 407 346 L233 346 A58 58 0 0 0 117 346 L96 346 Q84 346 84 340 Z"
+      fill="#0f7a4d"/>
+    <path d="M84 300 L562 300 L562 336 Q562 346 550 346 L523 346 A58 58 0 0 0 407 346 L233 346 A58 58 0 0 0 117 346 L96 346 Q84 346 84 340 Z" fill="#0c6841"/>
+    <rect x="300" y="238" width="30" height="8" rx="4" fill="#0a5636"/>
+  </g>
+
+  <!-- glass / roof -->
+  <g class="part" data-dx="0" data-dy="-92" data-dr="-5">
+    <path d="M178 228 Q222 178 270 172 L386 172 Q440 178 486 228 Z" fill="#22292e"/>
+    <path d="M296 172 L296 228" stroke="#0f7a4d" stroke-width="7"/>
+  </g>
+
+  <!-- mirror -->
+  <g class="part" data-dx="34" data-dy="-64" data-dr="24">
+    <rect x="486" y="212" width="18" height="12" rx="4" fill="#0c6841"/>
+    <rect x="484" y="222" width="6" height="12" rx="2" fill="#0c6841"/>
+  </g>
+
+  <!-- headlight -->
+  <g class="part" data-dx="98" data-dy="-16" data-dr="14">
+    <rect x="536" y="256" width="24" height="14" rx="7" fill="#ffe08a"/>
+  </g>
+  <!-- taillight -->
+  <g class="part" data-dx="-92" data-dy="-20" data-dr="-14">
+    <rect x="82" y="258" width="20" height="13" rx="6" fill="#e5533d"/>
+  </g>
+
+  <!-- wheels -->
+  <g class="part" data-dx="-74" data-dy="52" data-dr="-150">
+    <circle cx="175" cy="330" r="48" fill="#181d1f"/>
+    <circle cx="175" cy="330" r="26" fill="#c8cdd1"/>
+    <g stroke="#7d868c" stroke-width="4">
+      <line x1="175" y1="308" x2="175" y2="352"/><line x1="153" y1="330" x2="197" y2="330"/>
+      <line x1="160" y1="315" x2="190" y2="345"/><line x1="190" y1="315" x2="160" y2="345"/>
+    </g>
+    <circle cx="175" cy="330" r="7" fill="#3c4348"/>
+  </g>
+  <g class="part" data-dx="84" data-dy="52" data-dr="150">
+    <circle cx="465" cy="330" r="48" fill="#181d1f"/>
+    <circle cx="465" cy="330" r="26" fill="#c8cdd1"/>
+    <g stroke="#7d868c" stroke-width="4">
+      <line x1="465" y1="308" x2="465" y2="352"/><line x1="443" y1="330" x2="487" y2="330"/>
+      <line x1="450" y1="315" x2="480" y2="345"/><line x1="480" y1="315" x2="450" y2="345"/>
+    </g>
+    <circle cx="465" cy="330" r="7" fill="#3c4348"/>
+  </g>
+
+  <!-- inspection callouts -->
+  <g id="callouts">
+    <path class="callout-line" d="M120 395 L160 372"/>
+    <text class="callout" x="52" y="412" data-i18n="c_tyres">Tyres ✓</text>
+    <path class="callout-line" d="M330 420 L322 392"/>
+    <text class="callout" x="290" y="428" data-i18n="c_battery">Battery ✓</text>
+    <path class="callout-line" d="M596 288 L568 272"/>
+    <text class="callout" x="574" y="304" data-i18n="c_lights">Lights ✓</text>
+    <path class="callout-line" d="M560 60 L470 96"/>
+    <text class="callout" x="540" y="52" data-i18n="c_roof">Roof ✓</text>
+  </g>
+
+  <!-- stamp -->
+  <g id="stamp">
+    <rect x="228" y="60" width="184" height="46" rx="10" fill="none" stroke="#0f7a4d" stroke-width="3" transform="rotate(-8 320 83)"/>
+    <text x="320" y="90" text-anchor="middle" transform="rotate(-8 320 83)"
+      style="font:800 22px -apple-system,sans-serif" fill="#0f7a4d" data-i18n="c_stamp">INSPECTED ✓</text>
+  </g>
+</svg>
+</div></div>
+
+<div class="content">
+
+<section id="hero">
+  <h1 data-i18n-html="h1"><span class="serif">Automating</span><br>real operations.</h1>
+  <p class="tagline" data-i18n="hero_sub">I'm Navdeep. By day I keep Bolt's Berlin car-sharing fleet running. After hours I build the software that does the boring parts for me: iOS apps, AI video pipelines, and daily automations.</p>
+  <div class="btns">
+    <a class="btn primary" href="#work" data-i18n="hero_cta1">See my work</a>
+    <a class="btn" href="mailto:navdeep35cloud@gmail.com" data-i18n="hero_cta2">Connect</a>
   </div>
-</div></header>
+  <p class="hint" data-i18n="hero_hint">Scroll to inspect the car ↓</p>
+  <div class="marquee"><div class="marquee-track" id="mq">
+    <span class="chip">SwiftUI</span><span class="chip">Python</span><span class="chip">Gemini</span>
+    <span class="chip">GitHub Actions</span><span class="chip">ffmpeg</span><span class="chip">Expo</span>
+    <span class="chip">Google Sheets API</span><span class="chip">Claude Code</span>
+    <span class="chip">REST APIs</span><span class="chip">SQLite</span><span class="chip">TestFlight</span>
+  </div></div>
+</section>
 
-<section id="projects" class="wrap">
-  <h2 data-i18n="p_title">Projects</h2>
-  <div class="grid">
+<section id="story">
+  <div class="kicker rv" data-i18n="s_kick">How I work</div>
+  <h2 class="rv" data-i18n-html="s_title">Every tool starts as <span class="serif">a real problem.</span></h2>
+  <div class="step rv"><span class="n">01</span>
+    <h3 data-i18n="s1t">Spot the friction</h3>
+    <p data-i18n="s1">Working on the ground with a fleet of hundreds of cars, I see exactly where hours disappear: manual checks, scattered records, repeated clicks.</p>
+  </div>
+  <div class="step rv"><span class="n">02</span>
+    <h3 data-i18n="s2t">Build the tool</h3>
+    <p data-i18n="s2">I'm not a classically trained developer. I'm an operations person who ships software with modern AI tooling. Idea to production in weeks, not quarters.</p>
+  </div>
+  <div class="step rv"><span class="n">03</span>
+    <h3 data-i18n="s3t">Automate the loop</h3>
+    <p data-i18n="s3">Crons, APIs and dashboards keep every tool running daily without me touching it. Built once, working every morning.</p>
+  </div>
+</section>
 
-    <div class="card">
+<section id="work">
+  <div class="kicker rv" data-i18n="w_kick">Selected work</div>
+  <h2 class="rv" data-i18n-html="w_title">Things I've <span class="serif">actually shipped.</span></h2>
+  <div class="tabs rv" id="tabs">
+    <button class="on" data-f="all" data-i18n="t_all">All</button>
+    <button data-f="apps" data-i18n="t_apps">Apps</button>
+    <button data-f="ai" data-i18n="t_ai">AI & Video</button>
+    <button data-f="auto" data-i18n="t_auto">Automation</button>
+  </div>
+  <div class="cards">
+    <div class="card rv" data-cat="apps">
       <h3>BoltInspector <span class="badge" data-i18n="b_prod">in production</span></h3>
       <p data-i18n="p1">Fleet vehicle inspections meant manual checks and scattered records. I designed and built an iOS app with a live fleet dashboard on my own initiative. It is now part of day-to-day operations, and other markets are asking to adopt it.</p>
       <div class="tags"><span>SwiftUI</span><span>iOS</span><span>Google Sheets API</span><span>TestFlight</span></div>
-      <span class="tags"><span data-i18n="b_closed">closed source (company tool)</span></span>
+      <div class="tags"><span data-i18n="b_closed">closed source (company tool)</span></div>
     </div>
-
-    <div class="card">
+    <div class="card rv" data-cat="ai">
       <h3>shorts-factory</h3>
       <p data-i18n="p2">An automated pipeline that turns a topic or a business URL into a finished vertical video: AI-written script, generated clips, voiceover and karaoke captions. A web dashboard lets me approve every draft before anything goes out.</p>
       <div class="tags"><span>Python</span><span>Gemini</span><span>ffmpeg</span><span>Flask</span></div>
       <a class="link" href="https://github.com/navi3582/shorts-factory">github.com/navi3582/shorts-factory ↗</a>
     </div>
-
-    <div class="card">
+    <div class="card rv" data-cat="apps">
       <h3>GermanDriveTest</h3>
       <p data-i18n="p3">A driving-theory practice app for immigrants in Germany. Practice and simulated exam modes in English, Hindi, Punjabi, Urdu and Arabic, keeping the official German terms so you learn the exam vocabulary.</p>
       <div class="tags"><span>React Native</span><span>Expo</span><span>TypeScript</span><span>i18n</span></div>
       <a class="link" href="https://github.com/navi3582/GermanDriveTest">github.com/navi3582/GermanDriveTest ↗</a>
     </div>
-
-    <div class="card">
-      <h3 data-i18n="p4_t">More automations</h3>
-      <p data-i18n="p4">Scheduled LinkedIn posting through the official API, an animated GitHub profile generator, a text-to-video CLI, and algorithmic trading experiments. Small tools, built fast, running daily.</p>
+    <div class="card rv" data-cat="ai">
+      <h3>higgsfield-video</h3>
+      <p data-i18n="p5">A small command-line tool that turns a text prompt into an AI-generated video. Pick a model, aspect ratio and duration, and the finished clip downloads to your folder.</p>
+      <div class="tags"><span>Python</span><span>CLI</span><span>Text-to-video</span></div>
+      <a class="link" href="https://github.com/navi3582/higgsfield-video">github.com/navi3582/higgsfield-video ↗</a>
+    </div>
+    <div class="card rv" data-cat="auto">
+      <h3 data-i18n="p4_t">Daily automations</h3>
+      <p data-i18n="p4">Scheduled LinkedIn posting through the official API, an animated GitHub profile generator, and algorithmic trading experiments. Small tools, built fast, running every day.</p>
       <div class="tags"><span>Python</span><span>GitHub Actions</span><span>REST APIs</span><span>SVG</span></div>
       <a class="link" href="https://github.com/navi3582">github.com/navi3582 ↗</a>
     </div>
-
   </div>
 </section>
 
-<section id="about" class="wrap about">
-  <h2 data-i18n="a_title">About</h2>
-  <p data-i18n="a1">I'm not a classically trained developer. I'm an <strong>operations person who automates</strong>. Working on the ground at Bolt, I see exactly where daily work loses time, and I've taught myself to close those gaps with software.</p>
-  <p data-i18n="a2">AI-assisted development changed what one motivated person can ship. I've taken an iOS app from idea to production use, built a full video pipeline, and automated my own online presence. All outside working hours, all maintained by me.</p>
-  <p data-i18n="a3">What interests me most is <strong>AI-ops and automation</strong>: the space where knowing both sides, real operations and modern AI tooling, multiplies what a team can do.</p>
-</section>
-
-<section id="contact" class="wrap">
-  <h2 data-i18n="c_title">Contact</h2>
-  <p class="sub" data-i18n="c_sub">Based in Berlin. Happy to talk about automation, AI tooling, or interesting problems.</p>
-  <div class="contact-row btns">
-    <a class="btn primary" href="mailto:navdeep35cloud@gmail.com">Email</a>
-    <a class="btn" href="https://www.linkedin.com/in/navdeep-kumar-cloud">LinkedIn ↗</a>
-    <a class="btn" href="https://github.com/navi3582">GitHub ↗</a>
+<section id="contact">
+  <div class="contact-box rv">
+    <img class="headshot" src="headshot.jpg" alt="Navdeep Kumar">
+    <h2 style="margin-top:18px" data-i18n-html="ct_title">Inspection <span class="serif">passed.</span> Let's talk.</h2>
+    <p class="tagline" data-i18n="ct_sub">Based in Berlin. Happy to talk about automation, AI tooling, or interesting problems.</p>
+    <div class="btns">
+      <a class="btn primary" href="mailto:navdeep35cloud@gmail.com">Email</a>
+      <a class="btn" href="https://www.linkedin.com/in/navdeep-kumar-cloud">LinkedIn ↗</a>
+      <a class="btn" href="https://github.com/navi3582">GitHub ↗</a>
+    </div>
   </div>
+  <footer data-i18n="f">Built by me, hosted free on GitHub Pages.</footer>
 </section>
 
-<footer class="wrap"><span data-i18n="f">Built by me, hosted free on GitHub Pages.</span></footer>
+</div>
+</div>
 
 <script>
+/* ---------- i18n ---------- */
 const de = {
-  nav_projects:"Projekte", nav_about:"Über mich", nav_contact:"Kontakt",
-  hero_tag:"AI-Ops & Automatisierung · Berlin",
-  hero_sub:"Ich baue Werkzeuge, die meine Arbeit für mich erledigen. Tagsüber halte ich die Berliner Carsharing-Flotte von Bolt am Laufen. Nach Feierabend verwandle ich die Reibungspunkte, die ich sehe, in Software: iOS-Apps, KI-Video-Pipelines und Automatisierungen im echten Einsatz.",
-  hero_cta1:"Meine Projekte",
-  p_title:"Projekte",
-  b_prod:"im Produktiveinsatz",
-  b_closed:"Closed Source (internes Tool)",
+  nav_projects:"Projekte", nav_about:"Story", nav_contact:"Kontakt",
+  h1:'<span class="serif">Automatisierung</span><br>für echte Operations.',
+  hero_sub:"Ich bin Navdeep. Tagsüber halte ich die Berliner Carsharing-Flotte von Bolt am Laufen. Nach Feierabend baue ich die Software, die mir die langweiligen Teile abnimmt: iOS-Apps, KI-Video-Pipelines und tägliche Automatisierungen.",
+  hero_cta1:"Meine Projekte", hero_cta2:"Kontakt",
+  hero_hint:"Scrollen und das Auto inspizieren ↓",
+  s_kick:"So arbeite ich",
+  s_title:'Jedes Tool beginnt mit <span class="serif">einem echten Problem.</span>',
+  s1t:"Die Reibung finden",
+  s1:"Bei der Arbeit mit einer Flotte von hunderten Autos sehe ich genau, wo Stunden verschwinden: manuelle Checks, verstreute Aufzeichnungen, wiederholte Klicks.",
+  s2t:"Das Tool bauen",
+  s2:"Ich bin kein klassisch ausgebildeter Entwickler. Ich bin ein Operations-Mensch, der mit modernem KI-Tooling Software liefert. Von der Idee bis zur Produktion in Wochen, nicht Quartalen.",
+  s3t:"Den Kreislauf automatisieren",
+  s3:"Crons, APIs und Dashboards halten jedes Tool täglich am Laufen, ohne dass ich es anfasse. Einmal gebaut, jeden Morgen im Einsatz.",
+  w_kick:"Ausgewählte Arbeiten",
+  w_title:'Dinge, die ich <span class="serif">wirklich geliefert habe.</span>',
+  t_all:"Alle", t_apps:"Apps", t_ai:"KI & Video", t_auto:"Automatisierung",
+  b_prod:"im Produktiveinsatz", b_closed:"Closed Source (internes Tool)",
   p1:"Fahrzeugkontrollen in der Flotte bedeuteten manuelle Checks und verstreute Aufzeichnungen. Ich habe aus eigener Initiative eine iOS-App mit Live-Flotten-Dashboard entworfen und gebaut. Heute ist sie im täglichen Einsatz, und weitere Märkte wollen sie übernehmen.",
   p2:"Eine automatisierte Pipeline, die aus einem Thema oder einer Firmen-URL ein fertiges Hochformat-Video macht: KI-Skript, generierte Clips, Voiceover und Karaoke-Untertitel. Ein Web-Dashboard gibt jede Fassung frei, bevor etwas veröffentlicht wird.",
   p3:"Eine Übungs-App für die deutsche Führerschein-Theorieprüfung, gemacht für Zugewanderte. Übungs- und Prüfungsmodus auf Englisch, Hindi, Punjabi, Urdu und Arabisch, mit den offiziellen deutschen Begriffen zum Mitlernen.",
-  p4_t:"Weitere Automatisierungen",
-  p4:"Geplante LinkedIn-Posts über die offizielle API, ein animierter GitHub-Profil-Generator, ein Text-zu-Video-CLI und algorithmische Trading-Experimente. Kleine Tools, schnell gebaut, täglich im Einsatz.",
-  a_title:"Über mich",
-  a1:"Ich bin kein klassisch ausgebildeter Entwickler. Ich bin ein <strong>Operations-Mensch, der automatisiert</strong>. Durch die Arbeit vor Ort bei Bolt sehe ich genau, wo im Alltag Zeit verloren geht, und habe mir beigebracht, diese Lücken mit Software zu schließen.",
-  a2:"KI-gestützte Entwicklung hat verändert, was eine motivierte Person liefern kann. Ich habe eine iOS-App von der Idee bis in den Produktiveinsatz gebracht, eine komplette Video-Pipeline gebaut und meine eigene Online-Präsenz automatisiert. Alles außerhalb der Arbeitszeit, alles von mir gewartet.",
-  a3:"Was mich am meisten interessiert: <strong>AI-Ops und Automatisierung</strong>. Das Feld, in dem die Kombination aus echter Operations-Erfahrung und modernem KI-Tooling ein Team vervielfacht.",
-  c_title:"Kontakt",
-  c_sub:"Wohnhaft in Berlin. Ich freue mich über Austausch zu Automatisierung, KI-Tooling oder spannenden Problemen.",
-  f:"Selbst gebaut, kostenlos gehostet auf GitHub Pages."
+  p5:"Ein kleines Kommandozeilen-Tool, das aus einem Text-Prompt ein KI-generiertes Video macht. Modell, Format und Länge wählen, der fertige Clip landet im Ordner.",
+  p4_t:"Tägliche Automatisierungen",
+  p4:"Geplante LinkedIn-Posts über die offizielle API, ein animierter GitHub-Profil-Generator und algorithmische Trading-Experimente. Kleine Tools, schnell gebaut, jeden Tag im Einsatz.",
+  ct_title:'Inspektion <span class="serif">bestanden.</span> Reden wir.',
+  ct_sub:"Wohnhaft in Berlin. Ich freue mich über Austausch zu Automatisierung, KI-Tooling oder spannenden Problemen.",
+  f:"Selbst gebaut, kostenlos gehostet auf GitHub Pages.",
+  c_tyres:"Reifen ✓", c_battery:"Batterie ✓", c_lights:"Licht ✓", c_roof:"Dach ✓", c_stamp:"GEPRÜFT ✓"
 };
 const en = {};
-document.querySelectorAll("[data-i18n]").forEach(el => en[el.dataset.i18n] = el.innerHTML);
+document.querySelectorAll("[data-i18n],[data-i18n-html]").forEach(el=>{
+  const k = el.dataset.i18n || el.dataset.i18nHtml;
+  en[k] = el.innerHTML;
+});
 function setLang(l){
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const t = (l === "de" ? de : en)[el.dataset.i18n];
-    if (t) el.innerHTML = t;
+  document.querySelectorAll("[data-i18n],[data-i18n-html]").forEach(el=>{
+    const k = el.dataset.i18n || el.dataset.i18nHtml;
+    const t = (l==="de"?de:en)[k];
+    if(t!==undefined) el.innerHTML = t;
   });
   document.documentElement.lang = l;
-  document.getElementById("btn-en").classList.toggle("on", l === "en");
-  document.getElementById("btn-de").classList.toggle("on", l === "de");
+  document.getElementById("btn-en").classList.toggle("on", l==="en");
+  document.getElementById("btn-de").classList.toggle("on", l==="de");
   localStorage.setItem("lang", l);
 }
-document.getElementById("btn-en").onclick = () => setLang("en");
-document.getElementById("btn-de").onclick = () => setLang("de");
-const saved = localStorage.getItem("lang");
-if (saved === "de" || (!saved && navigator.language.startsWith("de"))) setLang("de");
+document.getElementById("btn-en").onclick = ()=>setLang("en");
+document.getElementById("btn-de").onclick = ()=>setLang("de");
+const savedL = localStorage.getItem("lang");
+if(savedL==="de" || (!savedL && navigator.language.startsWith("de"))) setLang("de");
+
+/* ---------- theme ---------- */
+const themeBtn = document.getElementById("theme");
+function applyTheme(t){ document.documentElement.setAttribute("data-theme", t); localStorage.setItem("theme", t); }
+const savedT = localStorage.getItem("theme");
+applyTheme(savedT || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+themeBtn.onclick = ()=>applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");
+
+/* ---------- marquee duplicate ---------- */
+const mq = document.getElementById("mq");
+mq.innerHTML += mq.innerHTML;
+
+/* ---------- reveal on scroll ---------- */
+const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("in"); }),{threshold:.15});
+document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+
+/* ---------- tabs ---------- */
+document.getElementById("tabs").addEventListener("click", e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("on", x===b));
+  document.querySelectorAll(".cards .card").forEach(c=>{
+    c.classList.toggle("hide", b.dataset.f!=="all" && c.dataset.cat!==b.dataset.f);
+  });
+});
+
+/* ---------- cursor dot ---------- */
+const dot = document.getElementById("dot");
+addEventListener("mousemove", e=>{ dot.style.left=e.clientX+"px"; dot.style.top=e.clientY+"px"; });
+
+/* ---------- scroll-driven car ---------- */
+const parts = [...document.querySelectorAll(".part")];
+const callouts = document.getElementById("callouts");
+const stamp = document.getElementById("stamp");
+const bar = document.getElementById("bar");
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let target = 0, current = 0;
+
+function explodeCurve(p){
+  if(p < .10) return 0;
+  if(p < .42) return (p-.10)/.32*.55;          // story: partial explode
+  if(p < .60) return .55 + (p-.42)/.18*.45;    // work: full explode
+  if(p < .78) return 1;
+  if(p < .94) return 1 - (p-.78)/.16;          // contact: reassemble
+  return 0;
+}
+function frame(t){
+  const doc = document.documentElement;
+  const p = doc.scrollTop / (doc.scrollHeight - doc.clientHeight || 1);
+  bar.style.width = (p*100).toFixed(2) + "%";
+  target = reduced ? 0 : explodeCurve(p);
+  current += (target - current) * .08;
+  const bob = (!reduced && current < .05) ? Math.sin(t/700)*5 : 0;
+  const damp = innerWidth < 840 ? .55 : 1;
+  for(const el of parts){
+    const dx = +el.dataset.dx * current * damp;
+    const dy = +el.dataset.dy * current * damp + bob;
+    const dr = +el.dataset.dr * current;
+    el.style.transform = `translate(${dx}px,${dy}px) rotate(${dr}deg)`;
+  }
+  const co = Math.max(0, Math.min(1, (current - .5) * 3));
+  callouts.querySelectorAll("*").forEach(el=>el.style.opacity = co);
+  const st = (p > .88 && current < .18) ? Math.min(1,(0.18-current)*8*(p-.88)/.12*4) : 0;
+  stamp.style.opacity = Math.max(0, Math.min(1, st));
+  stamp.style.transform = `scale(${.8 + .2*Math.min(1,st)})`;
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
 </script>
 </body>
 </html>
