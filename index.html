@@ -51,11 +51,12 @@ nav{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-conte
 .car-sticky svg{width:100%;max-width:520px;height:auto;overflow:visible}
 .content{padding-top:14vh}
 @media(max-width:840px){
-  .stage{grid-template-columns:1fr}
-  .car-col{position:sticky;top:52px;z-index:5;background:linear-gradient(var(--bg) 82%,transparent)}
-  .car-sticky{position:static;height:34vh}
-  .car-sticky svg{max-width:340px;max-height:32vh}
-  .content{padding-top:4vh}
+  .stage{grid-template-columns:1fr;padding:0 18px}
+  .car-col{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);margin:0 -18px;padding:62px 14px 4px;overflow:hidden}
+  .car-sticky{position:static;height:30vh}
+  .car-sticky svg{max-width:340px;max-height:28vh}
+  .content{padding-top:5vh}
 }
 
 section{min-height:88vh;display:flex;flex-direction:column;justify-content:center;padding:8vh 0}
@@ -122,6 +123,14 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
   pointer-events:none;z-index:70;opacity:0;transition:opacity .3s;transform:translate(-50%,-50%)}
 @media(hover:hover) and (pointer:fine){#dot{opacity:.8}}
 
+/* HUD */
+.hud{stroke:var(--accent);stroke-width:2.5;fill:none;opacity:.55}
+#scanline{fill:var(--accent);opacity:.35;animation:scan 5s ease-in-out infinite alternate}
+@keyframes scan{from{transform:translateY(30px)}to{transform:translateY(370px)}}
+@media(prefers-reduced-motion:reduce){#scanline{animation:none;opacity:0}}
+#scanpct,.hudlabel{font:600 15px ui-monospace,Menlo,monospace;fill:var(--accent);opacity:.8}
+.dotgrid{fill:#818f87;opacity:.14}
+
 /* car svg part styling */
 .part{transform-box:fill-box;transform-origin:center;will-change:transform}
 .callout{opacity:0;font:600 15px ui-monospace,Menlo,monospace;fill:var(--accent)}
@@ -145,7 +154,23 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
 <div class="stage" id="top">
 <div class="car-col"><div class="car-sticky">
 <svg viewBox="0 0 640 430" aria-label="car inspection illustration">
-  <ellipse cx="320" cy="378" rx="245" ry="15" fill="rgba(0,0,0,.10)"/>
+  <defs>
+    <clipPath id="bodyclip"><path d="M92 336 L92 292 Q92 262 122 254 L164 244 Q210 180 276 174 L398 174 Q462 180 506 240 L550 254 Q564 258 564 282 L564 330 Q564 342 550 342 L521 342 A56 56 0 0 0 409 342 L231 342 A56 56 0 0 0 119 342 L104 342 Q92 342 92 336 Z"/></clipPath>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle class="dotgrid" cx="1.6" cy="1.6" r="1.6"/>
+    </pattern>
+  </defs>
+
+  <!-- HUD backdrop -->
+  <rect x="26" y="14" width="588" height="402" fill="url(#dots)"/>
+  <path class="hud" d="M30 46 V26 Q30 22 34 22 H56"/>
+  <path class="hud" d="M610 46 V26 Q610 22 606 22 H584"/>
+  <path class="hud" d="M30 384 V404 Q30 408 34 408 H56"/>
+  <path class="hud" d="M610 384 V404 Q610 408 606 408 H584"/>
+  <rect id="scanline" x="30" y="0" width="580" height="2" rx="1"/>
+  <text id="scanpct" x="608" y="46" text-anchor="end">SCAN 0%</text>
+
+  <ellipse cx="320" cy="378" rx="240" ry="14" fill="rgba(0,0,0,.10)"/>
 
   <!-- brake discs (behind wheels) -->
   <g class="part" data-dx="-16" data-dy="26" data-dr="40">
@@ -157,54 +182,61 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
 
   <!-- battery -->
   <g class="part" data-dx="0" data-dy="86" data-dr="0">
-    <rect x="272" y="318" width="96" height="30" rx="7" fill="#134f36"/>
+    <rect x="272" y="318" width="96" height="30" rx="7" fill="#0e7a4d"/>
     <polygon points="322,323 310,338 319,338 314,349 330,332 320,332 326,323" fill="#ffd84d"/>
   </g>
 
-  <!-- body -->
+  <!-- body: white Polo-style hatch with green wrap -->
   <g class="part" data-dx="0" data-dy="-14" data-dr="0">
-    <path d="M84 340 L84 282 Q84 250 116 242 L156 232 Q206 172 268 166 L392 166 Q456 172 502 232 L546 246 Q562 251 562 272 L562 336 Q562 346 550 346 L523 346 A58 58 0 0 0 407 346 L233 346 A58 58 0 0 0 117 346 L96 346 Q84 346 84 340 Z"
-      fill="#0f7a4d"/>
-    <path d="M84 300 L562 300 L562 336 Q562 346 550 346 L523 346 A58 58 0 0 0 407 346 L233 346 A58 58 0 0 0 117 346 L96 346 Q84 346 84 340 Z" fill="#0c6841"/>
-    <rect x="300" y="238" width="30" height="8" rx="4" fill="#0a5636"/>
+    <path d="M92 336 L92 292 Q92 262 122 254 L164 244 Q210 180 276 174 L398 174 Q462 180 506 240 L550 254 Q564 258 564 282 L564 330 Q564 342 550 342 L521 342 A56 56 0 0 0 409 342 L231 342 A56 56 0 0 0 119 342 L104 342 Q92 342 92 336 Z"
+      fill="#eef0ee" stroke="#c9cfc9" stroke-width="2"/>
+    <g clip-path="url(#bodyclip)">
+      <polygon points="352,168 448,168 376,348 284,348" fill="#2fbf7f"/>
+      <rect x="92" y="306" width="472" height="40" fill="#e0e4e0"/>
+      <polygon points="330,306 366,306 352,348 318,348" fill="#27a76d"/>
+    </g>
+    <rect x="338" y="246" width="28" height="8" rx="4" fill="#b9c0ba"/>
+    <path d="M250 192 q12 -13 26 -8 l-9 11 z" fill="#23292d"/>
   </g>
 
   <!-- glass / roof -->
   <g class="part" data-dx="0" data-dy="-92" data-dr="-5">
-    <path d="M178 228 Q222 178 270 172 L386 172 Q440 178 486 228 Z" fill="#22292e"/>
-    <path d="M296 172 L296 228" stroke="#0f7a4d" stroke-width="7"/>
+    <path d="M186 236 Q228 186 278 180 L392 180 Q444 186 484 236 Z" fill="#1d2429"/>
+    <path d="M308 180 L308 236" stroke="#eef0ee" stroke-width="7"/>
   </g>
 
-  <!-- mirror -->
+  <!-- mirror (green like the wrap) -->
   <g class="part" data-dx="34" data-dy="-64" data-dr="24">
-    <rect x="486" y="212" width="18" height="12" rx="4" fill="#0c6841"/>
-    <rect x="484" y="222" width="6" height="12" rx="2" fill="#0c6841"/>
+    <rect x="484" y="220" width="20" height="13" rx="5" fill="#2fbf7f"/>
+    <rect x="482" y="231" width="6" height="12" rx="2" fill="#27a76d"/>
   </g>
 
-  <!-- headlight -->
+  <!-- LED headlight -->
   <g class="part" data-dx="98" data-dy="-16" data-dr="14">
-    <rect x="536" y="256" width="24" height="14" rx="7" fill="#ffe08a"/>
+    <rect x="534" y="258" width="28" height="13" rx="6" fill="#dfe7ef"/>
+    <rect x="538" y="262" width="20" height="4" rx="2" fill="#8fd0ff"/>
   </g>
   <!-- taillight -->
   <g class="part" data-dx="-92" data-dy="-20" data-dr="-14">
-    <rect x="82" y="258" width="20" height="13" rx="6" fill="#e5533d"/>
+    <rect x="88" y="258" width="20" height="14" rx="6" fill="#8c1f2b"/>
+    <rect x="92" y="262" width="12" height="5" rx="2" fill="#e5533d"/>
   </g>
 
   <!-- wheels -->
   <g class="part" data-dx="-74" data-dy="52" data-dr="-150">
-    <circle cx="175" cy="330" r="48" fill="#181d1f"/>
-    <circle cx="175" cy="330" r="26" fill="#c8cdd1"/>
-    <g stroke="#7d868c" stroke-width="4">
-      <line x1="175" y1="308" x2="175" y2="352"/><line x1="153" y1="330" x2="197" y2="330"/>
+    <circle cx="175" cy="330" r="48" fill="#14181b"/>
+    <circle cx="175" cy="330" r="25" fill="#cfd4d8"/>
+    <g stroke="#8b949b" stroke-width="4">
+      <line x1="175" y1="309" x2="175" y2="351"/><line x1="154" y1="330" x2="196" y2="330"/>
       <line x1="160" y1="315" x2="190" y2="345"/><line x1="190" y1="315" x2="160" y2="345"/>
     </g>
     <circle cx="175" cy="330" r="7" fill="#3c4348"/>
   </g>
   <g class="part" data-dx="84" data-dy="52" data-dr="150">
-    <circle cx="465" cy="330" r="48" fill="#181d1f"/>
-    <circle cx="465" cy="330" r="26" fill="#c8cdd1"/>
-    <g stroke="#7d868c" stroke-width="4">
-      <line x1="465" y1="308" x2="465" y2="352"/><line x1="443" y1="330" x2="487" y2="330"/>
+    <circle cx="465" cy="330" r="48" fill="#14181b"/>
+    <circle cx="465" cy="330" r="25" fill="#cfd4d8"/>
+    <g stroke="#8b949b" stroke-width="4">
+      <line x1="465" y1="309" x2="465" y2="351"/><line x1="444" y1="330" x2="486" y2="330"/>
       <line x1="450" y1="315" x2="480" y2="345"/><line x1="480" y1="315" x2="450" y2="345"/>
     </g>
     <circle cx="465" cy="330" r="7" fill="#3c4348"/>
@@ -212,20 +244,20 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
 
   <!-- inspection callouts -->
   <g id="callouts">
-    <path class="callout-line" d="M120 395 L160 372"/>
-    <text class="callout" x="52" y="412" data-i18n="c_tyres">Tyres ✓</text>
-    <path class="callout-line" d="M330 420 L322 392"/>
-    <text class="callout" x="290" y="428" data-i18n="c_battery">Battery ✓</text>
-    <path class="callout-line" d="M596 288 L568 272"/>
-    <text class="callout" x="574" y="304" data-i18n="c_lights">Lights ✓</text>
-    <path class="callout-line" d="M560 60 L470 96"/>
-    <text class="callout" x="540" y="52" data-i18n="c_roof">Roof ✓</text>
+    <path class="callout-line" d="M120 392 L160 370"/>
+    <text class="callout" x="56" y="408" data-i18n="c_tyres">Tyres ✓</text>
+    <path class="callout-line" d="M330 400 L322 385"/>
+    <text class="callout" x="292" y="415" data-i18n="c_battery">Battery ✓</text>
+    <path class="callout-line" d="M592 292 L566 274"/>
+    <text class="callout" x="566" y="308" data-i18n="c_lights">Lights ✓</text>
+    <path class="callout-line" d="M540 74 L470 108"/>
+    <text class="callout" x="518" y="66" data-i18n="c_roof">Roof ✓</text>
   </g>
 
   <!-- stamp -->
   <g id="stamp">
-    <rect x="228" y="60" width="184" height="46" rx="10" fill="none" stroke="#0f7a4d" stroke-width="3" transform="rotate(-8 320 83)"/>
-    <text x="320" y="90" text-anchor="middle" transform="rotate(-8 320 83)"
+    <rect x="228" y="66" width="184" height="46" rx="10" fill="none" stroke="#0f7a4d" stroke-width="3" transform="rotate(-8 320 89)"/>
+    <text x="320" y="96" text-anchor="middle" transform="rotate(-8 320 89)"
       style="font:800 22px -apple-system,sans-serif" fill="#0f7a4d" data-i18n="c_stamp">INSPECTED ✓</text>
   </g>
 </svg>
@@ -436,6 +468,7 @@ function frame(t){
     const dr = +el.dataset.dr * current;
     el.style.transform = `translate(${dx}px,${dy}px) rotate(${dr}deg)`;
   }
+  document.getElementById("scanpct").textContent = "SCAN " + Math.round(current*100) + "%";
   const co = Math.max(0, Math.min(1, (current - .5) * 3));
   callouts.querySelectorAll("*").forEach(el=>el.style.opacity = co);
   const st = (p > .88 && current < .18) ? Math.min(1,(0.18-current)*8*(p-.88)/.12*4) : 0;
