@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Navdeep Kumar · AI-Ops & Automation · Berlin</title>
 <meta name="description" content="Navdeep Kumar. I build tools that do my work for me. iOS apps, AI pipelines and automations. Berlin.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230f7a4d%22/><text x=%2250%22 y=%2272%22 font-size=%2260%22 text-anchor=%22middle%22>🚗</text></svg>">
+<meta property="og:title" content="Navdeep Kumar · AI-Ops & Automation · Berlin">
+<meta property="og:description" content="I build tools that do my work for me. iOS apps, AI pipelines and daily automations. Scroll the site to inspect the car.">
+<meta property="og:image" content="https://navi3582.github.io/social-card.png">
+<meta property="og:url" content="https://navi3582.github.io">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 :root{
   --bg:#faf6f0; --fg:#181d1a; --muted:#5d6862; --line:#e7e0d6;
@@ -53,10 +59,11 @@ nav{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-conte
 @media(max-width:840px){
   .stage{grid-template-columns:1fr;padding:0 18px}
   .car-col{position:sticky;top:0;z-index:20;background:var(--bg);
-    border-bottom:1px solid var(--line);margin:0 -18px;padding:62px 14px 4px;overflow:hidden}
-  .car-sticky{position:static;height:30vh}
-  .car-sticky svg{max-width:340px;max-height:28vh}
-  .content{padding-top:5vh}
+    border-bottom:1px solid var(--line);margin:0 -18px;padding:58px 14px 2px;overflow:hidden}
+  .car-sticky{position:static;height:19vh}
+  .car-sticky svg{max-width:300px;max-height:18vh}
+  .content{padding-top:3vh}
+  section{min-height:auto;padding:7vh 0;scroll-margin-top:calc(19vh + 76px)}
 }
 
 section{min-height:88vh;display:flex;flex-direction:column;justify-content:center;padding:8vh 0}
@@ -123,6 +130,18 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
   pointer-events:none;z-index:70;opacity:0;transition:opacity .3s;transform:translate(-50%,-50%)}
 @media(hover:hover) and (pointer:fine){#dot{opacity:.8}}
 
+/* stats strip */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:34px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:14px 16px}
+.stat b{display:block;font:700 26px ui-monospace,Menlo,monospace;color:var(--accent)}
+.stat span{font-size:12.5px;color:var(--muted)}
+
+/* github live embed */
+.gh-live{margin-top:26px;border:1px solid var(--line);border-radius:16px;background:#0d1117;padding:18px}
+.gh-live img{width:100%;display:block;border-radius:8px}
+.gh-live .cap{font:600 12px ui-monospace,Menlo,monospace;color:#39d353;margin-bottom:10px;display:block}
+
 /* HUD */
 .hud{stroke:var(--accent);stroke-width:2.5;fill:none;opacity:.55}
 #scanline{fill:var(--accent);opacity:.35;animation:scan 5s ease-in-out infinite alternate}
@@ -159,6 +178,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
     <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
       <circle class="dotgrid" cx="1.6" cy="1.6" r="1.6"/>
     </pattern>
+    <radialGradient id="glow"><stop offset="0" stop-color="#2fbf7f" stop-opacity=".16"/><stop offset="1" stop-color="#2fbf7f" stop-opacity="0"/></radialGradient>
   </defs>
 
   <!-- HUD backdrop -->
@@ -170,6 +190,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
   <rect id="scanline" x="30" y="0" width="580" height="2" rx="1"/>
   <text id="scanpct" x="608" y="46" text-anchor="end">SCAN 0%</text>
 
+  <ellipse cx="320" cy="260" rx="260" ry="150" fill="url(#glow)"/>
   <ellipse cx="320" cy="378" rx="240" ry="14" fill="rgba(0,0,0,.10)"/>
 
   <!-- brake discs (behind wheels) -->
@@ -191,12 +212,24 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
     <path d="M92 336 L92 292 Q92 262 122 254 L164 244 Q210 180 276 174 L398 174 Q462 180 506 240 L550 254 Q564 258 564 282 L564 330 Q564 342 550 342 L521 342 A56 56 0 0 0 409 342 L231 342 A56 56 0 0 0 119 342 L104 342 Q92 342 92 336 Z"
       fill="#eef0ee" stroke="#c9cfc9" stroke-width="2"/>
     <g clip-path="url(#bodyclip)">
-      <polygon points="352,168 448,168 376,348 284,348" fill="#2fbf7f"/>
       <rect x="92" y="306" width="472" height="40" fill="#e0e4e0"/>
-      <polygon points="330,306 366,306 352,348 318,348" fill="#27a76d"/>
     </g>
-    <rect x="338" y="246" width="28" height="8" rx="4" fill="#b9c0ba"/>
     <path d="M250 192 q12 -13 26 -8 l-9 11 z" fill="#23292d"/>
+  </g>
+
+  <!-- green wrap door (own part) -->
+  <g class="part" data-dx="52" data-dy="-40" data-dr="10">
+    <polygon points="352,178 430,178 370,340 300,340" fill="#2fbf7f"/>
+    <polygon points="317,306 352,306 340,340 304,340" fill="#27a76d"/>
+    <rect x="356" y="246" width="28" height="8" rx="4" fill="#e9efe9"/>
+  </g>
+
+  <!-- bumpers (own parts) -->
+  <g class="part" data-dx="76" data-dy="20" data-dr="8">
+    <path d="M516 300 L556 300 Q564 300 564 312 L564 330 Q564 342 550 342 L521 342 Q516 328 516 300 Z" fill="#e6e8e6" stroke="#c9cfc9" stroke-width="2"/>
+  </g>
+  <g class="part" data-dx="-76" data-dy="20" data-dr="-8">
+    <path d="M140 300 L92 300 L92 292 L92 336 Q92 342 104 342 L119 342 Q124 326 140 300 Z" fill="#e6e8e6" stroke="#c9cfc9" stroke-width="2"/>
   </g>
 
   <!-- glass / roof -->
@@ -273,6 +306,12 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
     <a class="btn" href="mailto:navdeep35cloud@gmail.com" data-i18n="hero_cta2">Connect</a>
   </div>
   <p class="hint" data-i18n="hero_hint">Scroll to inspect the car ↓</p>
+  <div class="stats">
+    <div class="stat rv"><b data-n="1">0</b><span data-i18n="st1">iOS app in production</span></div>
+    <div class="stat rv"><b data-n="5">0</b><span data-i18n="st2">public repos</span></div>
+    <div class="stat rv"><b data-n="45" data-plus="+">0</b><span data-i18n="st3">contributions this year</span></div>
+    <div class="stat rv"><b data-n="10" data-plus="+">0</b><span data-i18n="st4">tools & automations built</span></div>
+  </div>
   <div class="marquee"><div class="marquee-track" id="mq">
     <span class="chip">SwiftUI</span><span class="chip">Python</span><span class="chip">Gemini</span>
     <span class="chip">GitHub Actions</span><span class="chip">ffmpeg</span><span class="chip">Expo</span>
@@ -339,6 +378,10 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
       <a class="link" href="https://github.com/navi3582">github.com/navi3582 ↗</a>
     </div>
   </div>
+  <div class="gh-live rv">
+    <span class="cap" data-i18n="gh_cap">$ live from github, updates automatically</span>
+    <img src="https://raw.githubusercontent.com/navi3582/navi3582/main/contrib-heatmap.svg" alt="GitHub contribution graph" loading="lazy">
+  </div>
 </section>
 
 <section id="contact">
@@ -387,6 +430,8 @@ const de = {
   ct_title:'Inspektion <span class="serif">bestanden.</span> Reden wir.',
   ct_sub:"Wohnhaft in Berlin. Ich freue mich über Austausch zu Automatisierung, KI-Tooling oder spannenden Problemen.",
   f:"Selbst gebaut, kostenlos gehostet auf GitHub Pages.",
+  st1:"iOS-App im Produktiveinsatz", st2:"öffentliche Repos", st3:"Beiträge dieses Jahr", st4:"gebaute Tools & Automatisierungen",
+  gh_cap:"$ live von github, aktualisiert sich automatisch",
   c_tyres:"Reifen ✓", c_battery:"Batterie ✓", c_lights:"Licht ✓", c_roof:"Dach ✓", c_stamp:"GEPRÜFT ✓"
 };
 const en = {};
@@ -424,6 +469,20 @@ mq.innerHTML += mq.innerHTML;
 /* ---------- reveal on scroll ---------- */
 const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("in"); }),{threshold:.15});
 document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+
+/* ---------- count-up stats ---------- */
+const cio = new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting) return;
+  const el = e.target.querySelector("b"); cio.unobserve(e.target);
+  const end = +el.dataset.n, plus = el.dataset.plus || "";
+  const t0 = performance.now();
+  (function tick(t){
+    const k = Math.min(1,(t-t0)/1200);
+    el.textContent = Math.round(end*(1-Math.pow(1-k,3))) + (k===1?plus:"");
+    if(k<1) requestAnimationFrame(tick);
+  })(t0);
+}),{threshold:.4});
+document.querySelectorAll(".stat").forEach(el=>cio.observe(el));
 
 /* ---------- tabs ---------- */
 document.getElementById("tabs").addEventListener("click", e=>{
