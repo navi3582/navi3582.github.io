@@ -60,7 +60,7 @@ nav{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-conte
   .stage{grid-template-columns:1fr;padding:0 18px}
   .car-col{position:sticky;top:0;z-index:20;background:var(--bg);
     border-bottom:1px solid var(--line);margin:0 -18px;padding:58px 14px 2px;overflow:hidden}
-  .car-sticky{position:static;height:19vh}
+  .car-sticky{position:relative;top:auto;height:19vh}
   .car-sticky svg{max-width:300px;max-height:18vh}
   .content{padding-top:3vh}
   section{min-height:auto;padding:7vh 0;scroll-margin-top:calc(19vh + 76px)}
@@ -112,7 +112,8 @@ h2{font-size:clamp(28px,3.6vw,44px);letter-spacing:-.02em;line-height:1.1;margin
 .card p{color:var(--muted);font-size:14.5px;margin:10px 0 14px}
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
 .tags span{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 8px}
-.card a.link{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600}
+.card a.link,.card .link{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600}
+a.card h3{color:var(--fg)}
 .card a.link:hover{text-decoration:underline}
 
 /* reveal on scroll */
@@ -142,6 +143,15 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
 .gh-live img{width:100%;display:block;border-radius:8px}
 .gh-live .cap{font:600 12px ui-monospace,Menlo,monospace;color:#39d353;margin-bottom:10px;display:block}
 
+/* headlight beam: only in dark mode */
+#beam{opacity:0;transition:opacity 1s}
+[data-theme="dark"] #beam{opacity:.5}
+/* horn bounce */
+@keyframes honkb{0%{transform:none}25%{transform:translateY(-9px) scale(1.03)}55%{transform:translateY(2px) scale(.99)}100%{transform:none}}
+.honk{animation:honkb .5s ease}
+.car-sticky{cursor:pointer}
+.confetti{position:absolute;width:8px;height:12px;border-radius:2px;pointer-events:none;z-index:30}
+
 /* HUD */
 .hud{stroke:var(--accent);stroke-width:2.5;fill:none;opacity:.55}
 #scanline{fill:var(--accent);opacity:.35;animation:scan 5s ease-in-out infinite alternate}
@@ -165,6 +175,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
   <a class="brand" href="#top">navdeep.kumar</a>
   <a class="navlink" href="#work" data-i18n="nav_projects">Work</a>
   <a class="navlink" href="#story" data-i18n="nav_about">Story</a>
+  <a class="navlink" href="#writing" data-i18n="nav_blog">Blog</a>
   <a class="navlink" href="#contact" data-i18n="nav_contact">Contact</a>
   <div class="lang"><button id="btn-en" class="on">EN</button><button id="btn-de">DE</button></div>
   <button class="iconbtn" id="theme" aria-label="theme">◐</button>
@@ -178,6 +189,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
     <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
       <circle class="dotgrid" cx="1.6" cy="1.6" r="1.6"/>
     </pattern>
+    <linearGradient id="beamgrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff7c8" stop-opacity=".85"/><stop offset="1" stop-color="#fff7c8" stop-opacity="0"/></linearGradient>
     <radialGradient id="glow"><stop offset="0" stop-color="#2fbf7f" stop-opacity=".16"/><stop offset="1" stop-color="#2fbf7f" stop-opacity="0"/></radialGradient>
   </defs>
 
@@ -254,6 +266,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
 
   <!-- slim LED headlight -->
   <g class="part" data-dx="95" data-dy="-14" data-dr="12">
+    <polygon id="beam" points="558,254 640,236 640,296 560,266" fill="url(#beamgrad)"/>
     <polygon points="520,247 558,254 560,266 522,260" fill="#e8edf2"/>
     <polygon points="524,251 554,257 555,262 525,257" fill="#8fd0ff"/>
   </g>
@@ -386,6 +399,23 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
   </div>
 </section>
 
+<section id="writing">
+  <div class="kicker rv" data-i18n="wr_kick">Writing</div>
+  <h2 class="rv" data-i18n-html="wr_title">Notes from <span class="serif">the garage.</span></h2>
+  <div class="cards" style="margin-top:22px">
+    <a class="card rv" style="text-decoration:none" href="blog/boltinspector.html">
+      <h3 data-i18n="wp1t">Building BoltInspector: how a vehicle specialist shipped an iOS app</h3>
+      <p data-i18n="wp1">I check cars for a living. I got tired of the paperwork around them, so I built the tool myself. What I learned shipping software to people I see every day.</p>
+      <span class="link" data-i18n="read">Read →</span>
+    </a>
+    <a class="card rv" style="text-decoration:none" href="blog/self-updating-github.html">
+      <h3 data-i18n="wp2t">My GitHub profile rebuilds itself every morning</h3>
+      <p data-i18n="wp2">An animated ASCII portrait and a contribution graph that refreshes daily. No tokens, no servers, no JavaScript. Just SVG files and one cron job.</p>
+      <span class="link" data-i18n="read">Read →</span>
+    </a>
+  </div>
+</section>
+
 <section id="contact">
   <div class="contact-box rv">
     <img class="headshot" src="headshot.jpg" alt="Navdeep Kumar">
@@ -429,6 +459,13 @@ const de = {
   p5:"Ein kleines Kommandozeilen-Tool, das aus einem Text-Prompt ein KI-generiertes Video macht. Modell, Format und Länge wählen, der fertige Clip landet im Ordner.",
   p4_t:"Tägliche Automatisierungen",
   p4:"Geplante LinkedIn-Posts über die offizielle API, ein animierter GitHub-Profil-Generator und algorithmische Trading-Experimente. Kleine Tools, schnell gebaut, jeden Tag im Einsatz.",
+  nav_blog:"Blog", wr_kick:"Notizen",
+  wr_title:'Notizen aus <span class="serif">der Werkstatt.</span>',
+  wp1t:"BoltInspector: Wie ein Vehicle Specialist eine iOS-App liefert",
+  wp1:"Ich prüfe beruflich Autos. Der Papierkram drumherum hat mich genervt, also habe ich das Tool selbst gebaut. Was ich beim Ausliefern an Kollegen gelernt habe. (Artikel auf Englisch)",
+  wp2t:"Mein GitHub-Profil baut sich jeden Morgen selbst neu",
+  wp2:"Ein animiertes ASCII-Porträt und ein Contribution-Graph, der sich täglich aktualisiert. Ohne Token, ohne Server, ohne JavaScript. (Artikel auf Englisch)",
+  read:"Lesen →",
   ct_title:'Inspektion <span class="serif">bestanden.</span> Reden wir.',
   ct_sub:"Wohnhaft in Berlin. Ich freue mich über Austausch zu Automatisierung, KI-Tooling oder spannenden Problemen.",
   f:"Selbst gebaut, kostenlos gehostet auf GitHub Pages.",
@@ -499,6 +536,46 @@ document.getElementById("tabs").addEventListener("click", e=>{
 const dot = document.getElementById("dot");
 addEventListener("mousemove", e=>{ dot.style.left=e.clientX+"px"; dot.style.top=e.clientY+"px"; });
 
+/* ---------- horn + bounce on tap ---------- */
+const carBox = document.querySelector(".car-sticky");
+const carSvg = carBox.querySelector("svg");
+let actx;
+function honk(){
+  try{
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    [0, .18].forEach(t0=>{
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = "square"; o.frequency.value = 420;
+      g.gain.setValueAtTime(.0001, actx.currentTime + t0);
+      g.gain.exponentialRampToValueAtTime(.12, actx.currentTime + t0 + .02);
+      g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + t0 + .13);
+      o.connect(g).connect(actx.destination);
+      o.start(actx.currentTime + t0); o.stop(actx.currentTime + t0 + .15);
+    });
+  }catch(e){}
+  carSvg.classList.remove("honk"); void carSvg.offsetWidth; carSvg.classList.add("honk");
+}
+carBox.addEventListener("click", honk);
+
+/* ---------- confetti at SCAN 100% ---------- */
+let confettiDone = false;
+function confetti(){
+  const colors = ["#2fbf7f","#ffd84d","#e9efeb","#31b477","#8fd0ff"];
+  for(let i=0;i<26;i++){
+    const el = document.createElement("div");
+    el.className = "confetti";
+    el.style.background = colors[i % colors.length];
+    el.style.left = (30 + Math.random()*40) + "%";
+    el.style.top = "30%";
+    carBox.appendChild(el);
+    const dx = (Math.random()-.5)*260, dy = 120 + Math.random()*160;
+    el.animate([
+      {transform:"translate(0,0) rotate(0)", opacity:1},
+      {transform:`translate(${dx}px,${dy}px) rotate(${(Math.random()-.5)*720}deg)`, opacity:0}
+    ], {duration:900 + Math.random()*500, easing:"cubic-bezier(.2,.8,.4,1)"}).onfinish = ()=>el.remove();
+  }
+}
+
 /* ---------- scroll-driven car ---------- */
 const parts = [...document.querySelectorAll(".part")];
 const callouts = document.getElementById("callouts");
@@ -532,6 +609,7 @@ function frame(t){
   document.getElementById("scanpct").textContent = "SCAN " + Math.round(current*100) + "%";
   const co = Math.max(0, Math.min(1, (current - .5) * 3));
   callouts.querySelectorAll("*").forEach(el=>el.style.opacity = co);
+  if(!confettiDone && current > .985){ confettiDone = true; confetti(); }
   const st = (p > .88 && current < .18) ? Math.min(1,(0.18-current)*8*(p-.88)/.12*4) : 0;
   stamp.style.opacity = Math.max(0, Math.min(1, st));
   stamp.style.transform = `scale(${.8 + .2*Math.min(1,st)})`;

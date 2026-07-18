@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My GitHub profile rebuilds itself every morning</title>
+<meta name="description" content="An animated ASCII portrait, a neofetch card, and a contribution graph that refreshes daily with no tokens and no servers. How it works.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230f7a4d%22/><text x=%2250%22 y=%2272%22 font-size=%2260%22 text-anchor=%22middle%22>🚗</text></svg>">
+<style>
+:root{--bg:#faf6f0;--fg:#181d1a;--muted:#5d6862;--line:#e7e0d6;--accent:#0f7a4d}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1210;--fg:#e9efeb;--muted:#93a099;--line:#232b26;--accent:#31b477}}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:17px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:680px;margin:0 auto;padding:48px 24px 80px}
+a{color:var(--accent)}
+.back{display:inline-block;text-decoration:none;font-size:14.5px;font-weight:600;margin-bottom:40px}
+h1{font-size:clamp(30px,5vw,42px);line-height:1.15;letter-spacing:-.02em}
+.serif{font-family:Georgia,serif;font-style:italic;color:var(--accent)}
+.meta{color:var(--muted);font-size:14px;margin:16px 0 36px}
+h2{font-size:22px;margin:38px 0 12px;letter-spacing:-.01em}
+p{margin:16px 0}
+p.dim{color:var(--muted)}
+li{margin:8px 0 8px 22px}
+code{font:14.5px ui-monospace,Menlo,monospace;background:color-mix(in srgb,var(--line) 45%,transparent);border-radius:5px;padding:2px 6px}
+.box{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 20px;margin:24px 0;color:var(--muted);font-size:15.5px}
+</style>
+</head>
+<body><div class="wrap">
+<a class="back" href="../index.html">← navdeep.kumar</a>
+<h1>My GitHub profile <span class="serif">rebuilds itself</span> every morning.</h1>
+<div class="meta">Navdeep Kumar · Berlin · 2026</div>
+
+<p>If you open <a href="https://github.com/navi3582">my GitHub profile</a>, an ASCII portrait of me types itself onto the screen, a terminal-style info card prints next to it, and a contribution heatmap animates in above both. None of it uses JavaScript, because GitHub strips scripts from profile READMEs.</p>
+
+<p>The trick: GitHub does render SVG images, and it does play the animations inside them. So all the motion lives inside three SVG files, and the README just places them. I first saw this approach in a <a href="https://www.avivashishta.com/blog/build-animated-github-profile-readme.html">post by Avi Vashishta</a> and adapted it for my own profile.</p>
+
+<h2>The three files</h2>
+
+<ul>
+<li><b>The portrait.</b> A photo runs through background removal and contrast boosting, then gets downsampled to a grid where each pixel picks a character from a density ramp. Each row wipes in left to right with a small cursor riding the edge. One color only. Rainbow ASCII art always looks like noise.</li>
+<li><b>The info card.</b> Hand-written SVG styled like the output of neofetch: my role, my projects, my stack, fading in line by line.</li>
+<li><b>The heatmap.</b> The interesting one, because it has to stay fresh.</li>
+</ul>
+
+<h2>A live contribution graph with no token</h2>
+
+<p>GitHub serves everyone's contribution calendar as public HTML at <code>github.com/users/&lt;name&gt;/contributions</code>. No API key, no GraphQL, no rate-limit drama. A small Python script fetches that page, parses the day cells, and writes a JSON file. A second script renders the JSON as the classic 53-week grid of rounded boxes that reveal themselves diagonally.</p>
+
+<p>Then a GitHub Actions workflow runs every morning, re-scrapes, re-renders, and commits the new SVG back to the repo. The commit message ends with <code>[skip ci]</code> so the bot does not trigger itself in a loop.</p>
+
+<div class="box">The whole system is two Python scripts and one cron workflow. No server, no database, no hosting bill. The repo is the database and GitHub Actions is the server.</div>
+
+<h2>Why not use a stats widget service?</h2>
+
+<p>Plenty of hosted README widgets exist. They also rate-limit, go down, and leave a broken-image icon on your profile at the worst moment. Generating your own SVGs means everything is committed to your repo, loads instantly, and looks exactly how you designed it.</p>
+
+<p class="dim">All the code is public in my <a href="https://github.com/navi3582/navi3582">profile repository</a>. Fork it, swap in your own username and photo, and your profile can wake up before you do.</p>
+
+</div></body>
+</html>

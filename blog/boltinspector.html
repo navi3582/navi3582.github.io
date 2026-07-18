@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building BoltInspector: how a vehicle specialist shipped an iOS app</title>
+<meta name="description" content="I check cars for a living. I got tired of manual records, so I built an iOS app. It is now used in production. Here is how, and what I learned.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230f7a4d%22/><text x=%2250%22 y=%2272%22 font-size=%2260%22 text-anchor=%22middle%22>🚗</text></svg>">
+<style>
+:root{--bg:#faf6f0;--fg:#181d1a;--muted:#5d6862;--line:#e7e0d6;--accent:#0f7a4d}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1210;--fg:#e9efeb;--muted:#93a099;--line:#232b26;--accent:#31b477}}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:17px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:680px;margin:0 auto;padding:48px 24px 80px}
+a{color:var(--accent)}
+.back{display:inline-block;text-decoration:none;font-size:14.5px;font-weight:600;margin-bottom:40px}
+h1{font-size:clamp(30px,5vw,42px);line-height:1.15;letter-spacing:-.02em}
+.serif{font-family:Georgia,serif;font-style:italic;color:var(--accent)}
+.meta{color:var(--muted);font-size:14px;margin:16px 0 36px}
+h2{font-size:22px;margin:38px 0 12px;letter-spacing:-.01em}
+p{margin:16px 0;color:var(--fg)}
+p.dim{color:var(--muted)}
+li{margin:8px 0 8px 22px;color:var(--fg)}
+.box{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 20px;margin:24px 0;color:var(--muted);font-size:15.5px}
+</style>
+</head>
+<body><div class="wrap">
+<a class="back" href="../index.html">← navdeep.kumar</a>
+<h1>Building BoltInspector: how a vehicle specialist <span class="serif">shipped an iOS app.</span></h1>
+<div class="meta">Navdeep Kumar · Berlin · 2026</div>
+
+<p>My day job is physical. I look after car-sharing vehicles in Berlin: checking them, spotting damage, making sure the fleet is safe and ready to drive. It is honest work, and it has a lot of repetition in it.</p>
+
+<p>The repetitive part was never the cars. It was the paperwork around the cars. Manual checks, records living in different places, no quick way to see the state of the whole fleet at once. Every week I watched hours disappear into work that a computer should be doing.</p>
+
+<h2>I am not a developer</h2>
+
+<p>I have no computer science degree and no years of Swift experience. What I had was a very clear picture of the problem, because I lived inside it every day. In 2026 that turned out to be the more important half.</p>
+
+<p>I started building an iOS app in the evenings with AI-assisted coding tools. SwiftUI for the interface. Google Sheets as the backend, because that is where operational data already lived and everyone could read it without learning a new tool. TestFlight to get it onto real phones.</p>
+
+<div class="box">Boring technology was a feature, not a compromise. A backend my colleagues already understood meant zero onboarding and zero new accounts.</div>
+
+<h2>Shipping to people you see every day</h2>
+
+<p>The first version did one thing: a structured vehicle check that wrote clean records automatically. I used it myself on shift. Then a colleague used it. Then it grew a live dashboard so the state of the fleet was visible at a glance instead of buried in rows.</p>
+
+<p>Shipping to coworkers is a special kind of pressure. If something breaks, the user sits next to you tomorrow. That feedback loop made the app better faster than any planning document could have.</p>
+
+<p>Today the app is part of day-to-day operations, and people from other markets have asked about adopting it. It started as a side project built on my own time. It became the most convincing line on my CV.</p>
+
+<h2>What I learned</h2>
+
+<ul>
+<li><b>Being your own user is a superpower.</b> I never had to guess what the app should do. I just had to notice what annoyed me on shift.</li>
+<li><b>AI gets you 90% of the way.</b> The last 10% is the real work: edge cases, bad network days, and earning the trust of people who rely on the tool.</li>
+<li><b>Ship embarrassingly early.</b> Version one was ugly. It was also useful on day one, and useful beats pretty.</li>
+<li><b>Security is not optional, even for internal tools.</b> Every shortcut you take in week one becomes a risk you own in month six.</li>
+</ul>
+
+<p class="dim">The app is closed source since it is a company tool, but everything else I build is public on <a href="https://github.com/navi3582">GitHub</a>. If you are an operations person thinking "I could never build software": you probably can now. The tools changed. The job title on your badge matters less than it ever has.</p>
+
+</div></body>
+</html>
