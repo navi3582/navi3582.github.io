@@ -7,7 +7,7 @@
 <meta name="description" content="Navdeep Kumar. I build tools that do my work for me. iOS apps, AI pipelines and automations. Berlin.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230f7a4d%22/><text x=%2250%22 y=%2272%22 font-size=%2260%22 text-anchor=%22middle%22>🚗</text></svg>">
 <meta property="og:title" content="Navdeep Kumar · AI-Ops & Automation · Berlin">
-<meta property="og:description" content="I build tools that do my work for me. iOS apps, AI pipelines and daily automations. Scroll the site to inspect the car.">
+<meta property="og:description" content="I build AI tools and automations that do real work. iOS apps, video pipelines, daily crons. Scroll to bring the systems online.">
 <meta property="og:image" content="https://navi3582.github.io/social-card.png">
 <meta property="og:url" content="https://navi3582.github.io">
 <meta name="twitter:card" content="summary_large_image">
@@ -143,9 +143,22 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
 .gh-live img{width:100%;display:block;border-radius:8px}
 .gh-live .cap{font:600 12px ui-monospace,Menlo,monospace;color:#39d353;margin-bottom:10px;display:block}
 
-/* headlight beam: only in dark mode */
-#beam{opacity:0;transition:opacity 1s}
-[data-theme="dark"] #beam{opacity:.5}
+/* core styling */
+.chip{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.modtxt{font:600 12.5px ui-monospace,Menlo,monospace;fill:var(--fg)}
+.dotled{fill:var(--accent)}
+.orbit{fill:none;stroke:var(--accent);stroke-width:1.2;stroke-dasharray:2 7;opacity:.5}
+.ringd{fill:none;stroke:var(--accent);stroke-width:1;stroke-dasharray:5 6;opacity:.35;
+  animation:spin 24s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.web line{stroke:#0a3f28;stroke-width:1.6}
+.web circle{fill:#c9f5df}
+.web{animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.75}50%{opacity:1}}
+.link{stroke:var(--accent);stroke-width:1.6;stroke-dasharray:4 4;opacity:0}
+.mod{transform-box:fill-box;transform-origin:center;will-change:transform}
+[data-theme="dark"] #core ellipse{opacity:1.35}
+@media(prefers-reduced-motion:reduce){.ringd,.web{animation:none}}
 /* horn bounce */
 @keyframes honkb{0%{transform:none}25%{transform:translateY(-9px) scale(1.03)}55%{transform:translateY(2px) scale(.99)}100%{transform:none}}
 .honk{animation:honkb .5s ease}
@@ -182,130 +195,43 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
 
 <div class="stage" id="top">
 <div class="car-col"><div class="car-sticky">
-<svg viewBox="0 0 640 430" aria-label="car inspection illustration">
+<svg viewBox="0 0 640 430" aria-label="AI automation core with orbiting systems">
   <defs>
-    <clipPath id="bodyclip"><path d="M96 344 L88 320 Q84 306 84 292 L84 268 Q84 254 96 250 L104 248 Q110 200 146 192 Q240 176 330 180 Q346 182 362 192 L428 230 Q470 236 520 244 Q548 248 558 254 Q566 258 566 276 L566 304 Q566 318 560 330 L554 342 Q552 344 548 344 L512 344 A50 50 0 0 0 412 344 L228 344 A50 50 0 0 0 128 344 L96 344 Z"/></clipPath>
     <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
       <circle class="dotgrid" cx="1.6" cy="1.6" r="1.6"/>
     </pattern>
-    <linearGradient id="beamgrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff7c8" stop-opacity=".85"/><stop offset="1" stop-color="#fff7c8" stop-opacity="0"/></linearGradient>
-    <radialGradient id="glow"><stop offset="0" stop-color="#2fbf7f" stop-opacity=".16"/><stop offset="1" stop-color="#2fbf7f" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glow"><stop offset="0" stop-color="#2fbf7f" stop-opacity=".20"/><stop offset="1" stop-color="#2fbf7f" stop-opacity="0"/></radialGradient>
+    <radialGradient id="coreg"><stop offset="0" stop-color="#9ff0c8"/><stop offset=".55" stop-color="#2fbf7f"/><stop offset="1" stop-color="#0c5c3a"/></radialGradient>
   </defs>
 
-  <!-- HUD backdrop -->
   <rect x="26" y="14" width="588" height="402" fill="url(#dots)"/>
   <path class="hud" d="M30 46 V26 Q30 22 34 22 H56"/>
   <path class="hud" d="M610 46 V26 Q610 22 606 22 H584"/>
   <path class="hud" d="M30 384 V404 Q30 408 34 408 H56"/>
   <path class="hud" d="M610 384 V404 Q610 408 606 408 H584"/>
   <rect id="scanline" x="30" y="0" width="580" height="2" rx="1"/>
-  <text id="scanpct" x="608" y="46" text-anchor="end">SCAN 0%</text>
+  <text id="scanpct" x="608" y="46" text-anchor="end">SYS 0%</text>
 
-  <ellipse cx="320" cy="260" rx="260" ry="150" fill="url(#glow)"/>
-  <ellipse cx="320" cy="378" rx="240" ry="14" fill="rgba(0,0,0,.10)"/>
-
-  <!-- brake discs (behind wheels) -->
-  <g class="part" data-dx="-16" data-dy="26" data-dr="40">
-    <circle cx="178" cy="330" r="20" fill="#9aa3a8"/><circle cx="178" cy="330" r="8" fill="#6c757b"/>
-  </g>
-  <g class="part" data-dx="16" data-dy="26" data-dr="-40">
-    <circle cx="462" cy="330" r="20" fill="#9aa3a8"/><circle cx="462" cy="330" r="8" fill="#6c757b"/>
-  </g>
-
-  <!-- battery -->
-  <g class="part" data-dx="0" data-dy="86" data-dr="0">
-    <rect x="272" y="318" width="96" height="30" rx="7" fill="#0e7a4d"/>
-    <polygon points="322,323 310,338 319,338 314,349 330,332 320,332 326,323" fill="#ffd84d"/>
-  </g>
-
-  <!-- body: Polo Mk6 silhouette -->
-  <g class="part" data-dx="0" data-dy="-14" data-dr="0">
-    <path d="M96 344 L88 320 Q84 306 84 292 L84 268 Q84 254 96 250 L104 248 Q110 200 146 192 Q240 176 330 180 Q346 182 362 192 L428 230 Q470 236 520 244 Q548 248 558 254 Q566 258 566 276 L566 304 Q566 318 560 330 L554 342 Q552 344 548 344 L512 344 A50 50 0 0 0 412 344 L228 344 A50 50 0 0 0 128 344 L96 344 Z" fill="#edefed" stroke="#c6ccc6" stroke-width="2"/>
-    <g clip-path="url(#bodyclip)">
-      <rect x="84" y="312" width="482" height="34" fill="#dde1dd"/>
+  <g id="core">
+    <ellipse cx="320" cy="218" rx="235" ry="170" fill="url(#glow)"/>
+    <circle cx="320" cy="218" r="122" class="orbit"/>
+    <circle cx="320" cy="218" r="64" class="ringd"/>
+    <line class="link" data-i="0" x1="320" y1="178" x2="320" y2="114"/><line class="link" data-i="1" x1="358" y1="206" x2="419" y2="186"/><line class="link" data-i="2" x1="344" y1="250" x2="381" y2="302"/><line class="link" data-i="3" x1="296" y1="250" x2="259" y2="302"/><line class="link" data-i="4" x1="282" y1="206" x2="221" y2="186"/>
+    <circle cx="320" cy="218" r="36" fill="url(#coreg)"/>
+    <g class="web">
+      <line x1="320" y1="218" x2="304" y2="204"/><line x1="320" y1="218" x2="337" y2="207"/>
+      <line x1="320" y1="218" x2="332" y2="234"/><line x1="320" y1="218" x2="307" y2="231"/>
+      <line x1="304" y1="204" x2="337" y2="207"/><line x1="332" y1="234" x2="307" y2="231"/>
+      <circle cx="320" cy="218" r="3.5"/><circle cx="304" cy="204" r="3"/><circle cx="337" cy="207" r="3"/>
+      <circle cx="332" cy="234" r="3"/><circle cx="307" cy="231" r="3"/>
     </g>
-    <path d="M120 272 Q330 258 542 254" stroke="#d8dcd8" stroke-width="2.5" fill="none"/>
-    <path d="M252 238 L246 342" stroke="#dde1dd" stroke-width="2" fill="none"/>
-    <path d="M104 246 L110 200 L146 192 L140 199 L110 206 Z" fill="#dde1dd"/>
-    <path d="M206 184 q10 -11 22 -7 l-7 9 z" fill="#22282c"/>
-    <rect x="398" y="248" width="26" height="7" rx="3.5" fill="#b7beb7"/>
-    <rect x="516" y="262" width="46" height="6" rx="3" fill="#1a1f22"/>
-    <path d="M540 306 Q560 306 562 310 L562 330 Q558 340 552 342 L540 342 Z" fill="#1a1f22"/>
+    <g class="mod" data-i="0" data-sx="0" data-sy="-190" data-sr="30"><rect x="266" y="80" width="108" height="32" rx="9" class="chip"/><circle cx="280" cy="96" r="4" class="dotled"/><text x="290" y="100" class="modtxt">iOS app</text></g><g class="mod" data-i="1" data-sx="250" data-sy="-70" data-sr="-35"><rect x="382" y="164" width="108" height="32" rx="9" class="chip"/><circle cx="396" cy="180" r="4" class="dotled"/><text x="406" y="185" class="modtxt">video pipeline</text></g><g class="mod" data-i="2" data-sx="215" data-sy="170" data-sr="25"><rect x="338" y="301" width="108" height="32" rx="9" class="chip"/><circle cx="352" cy="317" r="4" class="dotled"/><text x="362" y="321" class="modtxt">job scanner</text></g><g class="mod" data-i="3" data-sx="-215" data-sy="170" data-sr="-25"><rect x="194" y="301" width="108" height="32" rx="9" class="chip"/><circle cx="208" cy="317" r="4" class="dotled"/><text x="218" y="321" class="modtxt">LinkedIn bot</text></g><g class="mod" data-i="4" data-sx="-250" data-sy="-70" data-sr="35"><rect x="150" y="164" width="108" height="32" rx="9" class="chip"/><circle cx="164" cy="180" r="4" class="dotled"/><text x="174" y="185" class="modtxt">GitHub cron</text></g>
   </g>
 
-  <!-- glasshouse (explodes up) -->
-  <g class="part" data-dx="0" data-dy="-95" data-dr="-4">
-    <path d="M152 232 Q166 202 192 198 Q252 188 330 191 Q344 192 356 200 L412 230 Q418 234 412 236 L160 236 Q148 236 152 232 Z" fill="#1b2126"/>
-    <path d="M292 191 L292 236" stroke="#edefed" stroke-width="7"/>
-    <path d="M366 205 L398 228" stroke="#edefed" stroke-width="4"/>
-  </g>
-
-  <!-- green wrap front door (own part) -->
-  <g class="part" data-dx="56" data-dy="-30" data-dr="8">
-    <g clip-path="url(#bodyclip)">
-      <polygon points="306,238 402,238 380,344 284,344" fill="#2fbf7f"/>
-      <polygon points="295,312 388,312 380,344 284,344" fill="#27a76d"/>
-    </g>
-    <rect x="318" y="250" width="26" height="7" rx="3.5" fill="#e9efe9"/>
-  </g>
-
-  <!-- bumpers -->
-  <g class="part" data-dx="76" data-dy="20" data-dr="8">
-    <path d="M522 298 L560 298 Q566 302 566 310 L566 304 Q566 318 560 330 L554 342 Q552 344 548 344 L524 344 Q520 322 522 298 Z" fill="#e4e7e4" stroke="#c6ccc6" stroke-width="2"/>
-  </g>
-  <g class="part" data-dx="-76" data-dy="20" data-dr="-8">
-    <path d="M130 298 L84 298 L84 292 L88 320 Q92 338 100 344 L124 344 Q124 320 130 298 Z" fill="#e4e7e4" stroke="#c6ccc6" stroke-width="2"/>
-  </g>
-
-  <!-- mirror (green wrap) -->
-  <g class="part" data-dx="36" data-dy="-58" data-dr="22">
-    <rect x="424" y="220" width="20" height="12" rx="5" fill="#2fbf7f"/>
-    <rect x="422" y="230" width="6" height="8" rx="2" fill="#27a76d"/>
-  </g>
-
-  <!-- slim LED headlight -->
-  <g class="part" data-dx="95" data-dy="-14" data-dr="12">
-    <polygon id="beam" points="558,254 640,236 640,296 560,266" fill="url(#beamgrad)"/>
-    <polygon points="520,247 558,254 560,266 522,260" fill="#e8edf2"/>
-    <polygon points="524,251 554,257 555,262 525,257" fill="#8fd0ff"/>
-  </g>
-  <!-- wrap taillight -->
-  <g class="part" data-dx="-88" data-dy="-18" data-dr="-12">
-    <polygon points="92,252 122,249 118,270 90,268" fill="#7a1622"/>
-    <polygon points="95,256 117,254 115,264 94,262" fill="#c93332"/>
-  </g>
-
-  <!-- wheels: twisted 10-spoke alloys -->
-  <g class="part" data-dx="-74" data-dy="52" data-dr="-150">
-    <circle cx="178" cy="330" r="48" fill="#14181b"/>
-    <circle cx="178" cy="330" r="26" fill="#d3d7da"/>
-    <g stroke="#9aa2a8" stroke-width="3.4" stroke-linecap="round"><line x1="178" y1="330" x2="174.8" y2="307.2"/><line x1="178" y1="330" x2="181.2" y2="307.2"/><line x1="178" y1="330" x2="198.7" y2="319.9"/><line x1="178" y1="330" x2="200.7" y2="326.0"/><line x1="178" y1="330" x2="194.0" y2="346.5"/><line x1="178" y1="330" x2="188.8" y2="350.3"/><line x1="178" y1="330" x2="167.2" y2="350.3"/><line x1="178" y1="330" x2="162.0" y2="346.5"/><line x1="178" y1="330" x2="155.3" y2="326.0"/><line x1="178" y1="330" x2="157.3" y2="319.9"/></g>
-    <circle cx="178" cy="330" r="6.5" fill="#454c52"/>
-  </g>
-  <g class="part" data-dx="84" data-dy="52" data-dr="150">
-    <circle cx="462" cy="330" r="48" fill="#14181b"/>
-    <circle cx="462" cy="330" r="26" fill="#d3d7da"/>
-    <g stroke="#9aa2a8" stroke-width="3.4" stroke-linecap="round"><line x1="462" y1="330" x2="458.8" y2="307.2"/><line x1="462" y1="330" x2="465.2" y2="307.2"/><line x1="462" y1="330" x2="482.7" y2="319.9"/><line x1="462" y1="330" x2="484.7" y2="326.0"/><line x1="462" y1="330" x2="478.0" y2="346.5"/><line x1="462" y1="330" x2="472.8" y2="350.3"/><line x1="462" y1="330" x2="451.2" y2="350.3"/><line x1="462" y1="330" x2="446.0" y2="346.5"/><line x1="462" y1="330" x2="439.3" y2="326.0"/><line x1="462" y1="330" x2="441.3" y2="319.9"/></g>
-    <circle cx="462" cy="330" r="6.5" fill="#454c52"/>
-  </g>
-
-  <!-- inspection callouts -->
-  <g id="callouts">
-    <path class="callout-line" d="M120 392 L160 370"/>
-    <text class="callout" x="56" y="408" data-i18n="c_tyres">Tyres ✓</text>
-    <path class="callout-line" d="M330 400 L322 385"/>
-    <text class="callout" x="292" y="415" data-i18n="c_battery">Battery ✓</text>
-    <path class="callout-line" d="M592 292 L566 274"/>
-    <text class="callout" x="566" y="308" data-i18n="c_lights">Lights ✓</text>
-    <path class="callout-line" d="M540 74 L470 108"/>
-    <text class="callout" x="518" y="66" data-i18n="c_roof">Roof ✓</text>
-  </g>
-
-  <!-- stamp -->
   <g id="stamp">
-    <rect x="228" y="66" width="184" height="46" rx="10" fill="none" stroke="#0f7a4d" stroke-width="3" transform="rotate(-8 320 89)"/>
-    <text x="320" y="96" text-anchor="middle" transform="rotate(-8 320 89)"
-      style="font:800 22px -apple-system,sans-serif" fill="#0f7a4d" data-i18n="c_stamp">INSPECTED ✓</text>
+    <rect x="398" y="64" width="196" height="46" rx="10" fill="none" stroke="#0f7a4d" stroke-width="3" transform="rotate(-8 496 87)"/>
+    <text x="496" y="94" text-anchor="middle" transform="rotate(-8 496 87)"
+      style="font:800 21px -apple-system,sans-serif" fill="#0f7a4d" data-i18n="c_stamp">AUTOMATED ✓</text>
   </g>
 </svg>
 </div></div>
@@ -314,12 +240,12 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
 
 <section id="hero">
   <h1 data-i18n-html="h1"><span class="serif">Automating</span><br>real operations.</h1>
-  <p class="tagline" data-i18n="hero_sub">I'm Navdeep. By day I keep Bolt's Berlin car-sharing fleet running. After hours I build the software that does the boring parts for me: iOS apps, AI video pipelines, and daily automations.</p>
+  <p class="tagline" data-i18n="hero_sub">I'm Navdeep. I build AI tools and automations that do real work: an iOS app in production, video pipelines, and daily crons that run while I sleep. My operations job at Bolt is where I find the problems worth automating.</p>
   <div class="btns">
     <a class="btn primary" href="#work" data-i18n="hero_cta1">See my work</a>
     <a class="btn" href="mailto:navdeep35cloud@gmail.com" data-i18n="hero_cta2">Connect</a>
   </div>
-  <p class="hint" data-i18n="hero_hint">Scroll to inspect the car ↓</p>
+  <p class="hint" data-i18n="hero_hint">Scroll to bring the systems online ↓</p>
   <div class="stats">
     <div class="stat rv"><b data-n="1">0</b><span data-i18n="st1">iOS app in production</span></div>
     <div class="stat rv"><b data-n="5">0</b><span data-i18n="st2">public repos</span></div>
@@ -401,7 +327,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
 <section id="contact">
   <div class="contact-box rv">
     <img class="headshot" src="headshot.jpg" alt="Navdeep Kumar">
-    <h2 style="margin-top:18px" data-i18n-html="ct_title">Inspection <span class="serif">passed.</span> Let's talk.</h2>
+    <h2 style="margin-top:18px" data-i18n-html="ct_title">All systems <span class="serif">online.</span> Let's talk.</h2>
     <p class="tagline" data-i18n="ct_sub">Based in Berlin. Happy to talk about automation, AI tooling, or interesting problems.</p>
     <div class="btns">
       <a class="btn primary" href="mailto:navdeep35cloud@gmail.com">Email</a>
@@ -420,9 +346,9 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px}
 const de = {
   nav_projects:"Projekte", nav_about:"Story", nav_contact:"Kontakt",
   h1:'<span class="serif">Automatisierung</span><br>für echte Operations.',
-  hero_sub:"Ich bin Navdeep. Tagsüber halte ich die Berliner Carsharing-Flotte von Bolt am Laufen. Nach Feierabend baue ich die Software, die mir die langweiligen Teile abnimmt: iOS-Apps, KI-Video-Pipelines und tägliche Automatisierungen.",
+  hero_sub:"Ich bin Navdeep. Ich baue KI-Tools und Automatisierungen, die echte Arbeit erledigen: eine iOS-App im Produktiveinsatz, Video-Pipelines und tägliche Crons, die laufen, während ich schlafe. Mein Operations-Job bei Bolt zeigt mir, welche Probleme es wert sind, automatisiert zu werden.",
   hero_cta1:"Meine Projekte", hero_cta2:"Kontakt",
-  hero_hint:"Scrollen und das Auto inspizieren ↓",
+  hero_hint:"Scrollen und die Systeme hochfahren ↓",
   s_kick:"So arbeite ich",
   s_title:'Jedes Tool beginnt mit <span class="serif">einem echten Problem.</span>',
   s1t:"Die Reibung finden",
@@ -441,12 +367,12 @@ const de = {
   p5:"Ein kleines Kommandozeilen-Tool, das aus einem Text-Prompt ein KI-generiertes Video macht. Modell, Format und Länge wählen, der fertige Clip landet im Ordner.",
   p4_t:"Tägliche Automatisierungen",
   p4:"Geplante LinkedIn-Posts über die offizielle API, ein animierter GitHub-Profil-Generator und algorithmische Trading-Experimente. Kleine Tools, schnell gebaut, jeden Tag im Einsatz.",
-  ct_title:'Inspektion <span class="serif">bestanden.</span> Reden wir.',
+  ct_title:'Alle Systeme <span class="serif">online.</span> Reden wir.',
   ct_sub:"Wohnhaft in Berlin. Ich freue mich über Austausch zu Automatisierung, KI-Tooling oder spannenden Problemen.",
   f:"Selbst gebaut, kostenlos gehostet auf GitHub Pages.",
   st1:"iOS-App im Produktiveinsatz", st2:"öffentliche Repos", st3:"Beiträge dieses Jahr", st4:"gebaute Tools & Automatisierungen",
   gh_cap:"$ live von github, aktualisiert sich automatisch",
-  c_tyres:"Reifen ✓", c_battery:"Batterie ✓", c_lights:"Licht ✓", c_roof:"Dach ✓", c_stamp:"GEPRÜFT ✓"
+  c_tyres:"Reifen ✓", c_battery:"Batterie ✓", c_lights:"Licht ✓", c_roof:"Dach ✓", c_stamp:"AUTOMATISIERT ✓"
 };
 const en = {};
 document.querySelectorAll("[data-i18n],[data-i18n-html]").forEach(el=>{
@@ -551,41 +477,37 @@ function confetti(){
   }
 }
 
-/* ---------- scroll-driven car ---------- */
-const parts = [...document.querySelectorAll(".part")];
-const callouts = document.getElementById("callouts");
+/* ---------- scroll-driven automation core ---------- */
+const core = document.getElementById("core");
+const mods = [...document.querySelectorAll(".mod")];
+const links = [...document.querySelectorAll(".link")];
 const stamp = document.getElementById("stamp");
 const bar = document.getElementById("bar");
+const scanpct = document.getElementById("scanpct");
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 let target = 0, current = 0;
 
-function explodeCurve(p){
-  if(p < .10) return 0;
-  if(p < .42) return (p-.10)/.32*.55;          // story: partial explode
-  if(p < .60) return .55 + (p-.42)/.18*.45;    // work: full explode
-  if(p < .78) return 1;
-  if(p < .94) return 1 - (p-.78)/.16;          // contact: reassemble
-  return 0;
-}
 function frame(t){
   const doc = document.documentElement;
   const p = doc.scrollTop / (doc.scrollHeight - doc.clientHeight || 1);
   bar.style.width = (p*100).toFixed(2) + "%";
-  target = reduced ? 0 : explodeCurve(p);
+  target = reduced ? 1 : Math.max(0, Math.min(1, (p - .04) / .68));
   current += (target - current) * .08;
-  const bob = (!reduced && current < .05) ? Math.sin(t/700)*5 : 0;
-  const damp = innerWidth < 840 ? .55 : 1;
-  for(const el of parts){
-    const dx = +el.dataset.dx * current * damp;
-    const dy = +el.dataset.dy * current * damp + bob;
-    const dr = +el.dataset.dr * current;
-    el.style.transform = `translate(${dx}px,${dy}px) rotate(${dr}deg)`;
+  const bob = reduced ? 0 : Math.sin(t/900)*5;
+  core.style.transform = `translateY(${bob.toFixed(2)}px)`;
+  let docked = 0;
+  for(const el of mods){
+    const k = +el.dataset.i;
+    const d = Math.max(0, Math.min(1, (current - k*.15) / .25));
+    const ease = 1 - Math.pow(1-d, 3);
+    if(d > .95) docked++;
+    el.style.transform = `translate(${(+el.dataset.sx*(1-ease)).toFixed(1)}px,${(+el.dataset.sy*(1-ease)).toFixed(1)}px) rotate(${(+el.dataset.sr*(1-ease)).toFixed(1)}deg)`;
+    el.style.opacity = .25 + .75*ease;
+    links[k].style.opacity = ease;
   }
-  document.getElementById("scanpct").textContent = "SCAN " + Math.round(current*100) + "%";
-  const co = Math.max(0, Math.min(1, (current - .5) * 3));
-  callouts.querySelectorAll("*").forEach(el=>el.style.opacity = co);
-  if(!confettiDone && current > .985){ confettiDone = true; confetti(); }
-  const st = (p > .88 && current < .18) ? Math.min(1,(0.18-current)*8*(p-.88)/.12*4) : 0;
+  scanpct.textContent = `SYS ${Math.round(current*100)}% · ${docked}/5`;
+  if(!confettiDone && docked === 5 && current > .97){ confettiDone = true; confetti(); }
+  const st = current > .93 ? (current-.93)/.07 : 0;
   stamp.style.opacity = Math.max(0, Math.min(1, st));
   stamp.style.transform = `scale(${.8 + .2*Math.min(1,st)})`;
   requestAnimationFrame(frame);
